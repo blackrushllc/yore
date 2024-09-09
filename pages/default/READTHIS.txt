@@ -1,0 +1,51 @@
+So
+
+/pages/default/modules
+/pages/default/views
+/pages/default/views/home.html
+/pages/default/home.json
+
+SHOULD BE MORE LIKE THIS:
+
+/pages/default/modules
+/pages/default/default/views
+/pages/default/default/views/home.html
+/pages/default/default/views/page1.html
+/pages/default/default/views/page2.html
+
+/pages/default/default/home.json
+/pages/default/default/page1.json
+/pages/default/default/page2.json
+
+/pages/default/about/views
+/pages/default/about/views/home.html
+/pages/default/about/views/about1.html
+/pages/default/about/views/about2.html
+
+/pages/default/about/home.json
+/pages/default/about/about1.json
+/pages/default/about/about2.json
+
+BECAUSE
+
+/pages/   .................................... all pages
+      /_domains/  ............................ all subdomain pages
+      /default/   ............................ all else pages (no subdomain)
+              /modules  ...................... can override module views, etc
+              /default/views  ................ views for "/"
+              /default/views/home.html ....... view for "/", aka "/home"
+              /default/home.json  ............ page json for "/"
+
+              /default/page1  ................ views for "/page1"
+              /default/views/page1.html ...... main view for "/page1"
+              /default/page1.json  ........... page json for "/page1"
+
+              /default/about  ................ views for "/about"
+              /default/views/about.html ...... main view for "/about"
+              /default/about.json  ........... page json for "/about"
+
+              /about/views   ................. views for /about/
+              /about/views/xxx.html   ........ view for /about/xxx
+              /about/xxx.json  ............... page json for /about/xxx
+
+

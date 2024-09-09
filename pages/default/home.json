@@ -1,0 +1,9 @@
+{
+  "domain": "default",
+  "site": "default",
+  "page": "home",
+  "title": "No Title",
+  "theme": "default",
+  "desc": "This is a home page for the default site",
+  "body": "Default: Hello! This is the body of the 'default' site 'home' page!"
+}
