@@ -65,7 +65,7 @@ class Library
      */
     public function init() {
 
-        $uri = $_SERVER['REQUEST_URI'];
+        $uri = $_SERVER['REQUEST_URI'] ?? '';
 
         // Remove any GET parameters that might be in the REQUEST_URI
         $uri = explode('?', $uri);
@@ -109,7 +109,7 @@ class Library
         }
 
 
-        $this->domain = $_SERVER['SERVER_NAME'];
+        $this->domain = $_SERVER['SERVER_NAME'] ?? 'local';
         $this->site = !empty($this->params[0] ?? null) ? $this->params[0] : 'default';
         $this->name = !empty($this->params[1] ?? null) ? $this->params[1] : 'home';
         $this->arg1 = $this->params[2] ?? false;

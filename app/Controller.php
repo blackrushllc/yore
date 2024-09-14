@@ -47,10 +47,12 @@ class Controller extends Library {
     /**
      *
      */
-    public function __construct() {
+    public function __construct($cli = false) {
 
         // Get public controller properties https://domain/site/name/arg1/arg2/arg3
         $this->init();
+
+        if ($cli) return;
 
         if ($this->api) {
             $return = $this->apiProcess(); // TODO: Json Encode this before returning unless we have a reason not to like maybe don't json encode a string or stuff
