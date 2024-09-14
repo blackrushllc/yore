@@ -82,7 +82,7 @@ class Module extends Modules {
      * @param $world
      * @return string
      */
-    public function fred_chsconsole($unit) {
+    public function fred_chs_console($unit) {
 
         $unit = $_REQUEST['unit'] ?? 'no unit';
 
@@ -105,7 +105,7 @@ class Module extends Modules {
      * @param $unit
      * @return string
      */
-    public function fred_chsrooms() {
+    public function fred_chs_rooms() {
 
         if (empty($_REQUEST['unit'])) return 'Select a unit to add or remove rooms';
 
@@ -170,7 +170,7 @@ class Module extends Modules {
      * @param $unit
      * @return string
      */
-    public function fred_chsunits() {
+    public function fred_chs_units() {
 
         $sql = "SELECT DISTINCT unit FROM chs_rooms where code=? ORDER BY unit";
 
@@ -200,7 +200,7 @@ class Module extends Modules {
      * @param $unit
      * @return string
      */
-    public function fred_chsoptions() {
+    public function fred_chs_options() {
 
         //if (empty($_SESSION['code'])) exit('Error: no code 1');
 
@@ -248,7 +248,7 @@ class Module extends Modules {
      * @param $unit
      * @return string
      */
-    public function fred_chsunit() {
+    public function fred_chs_unit() {
 
         $unit = $_REQUEST['unit'] ?? 'no unit';
 
@@ -314,7 +314,7 @@ class Module extends Modules {
      * @param $world
      * @return string
      */
-    public function fred_chsnurse($unit = '') {
+    public function fred_chs_nurse($unit = '') {
 
         $sql = "SELECT * FROM chs_rooms WHERE 
                     alarm != 'clear' 
