@@ -33,17 +33,67 @@ required modules installed
 # This thing does everything
 use App\Controller;
 
-require '../vendor/autoload.php';
+
+// Autoload function
+spl_autoload_register(function ($class_name) {
+    // Define the base directory for the "App" namespace
+    $base_dir = __DIR__ . '/../app/';
+
+    // Check if the class is within the "App" namespace
+    $namespace = 'App\\';
+    if (strncmp($namespace, $class_name, strlen($namespace)) === 0) {
+        // Remove the namespace prefix
+        $relative_class = substr($class_name, strlen($namespace));
+
+        // Replace the namespace separator with the directory separator
+        $file = $base_dir . str_replace('\\', DIRECTORY_SEPARATOR, $relative_class) . '.php';
+
+        // If the file exists, require it
+        if (file_exists($file)) {
+            require $file;
+        }
+    }
+});
+# If we're gonna be using Evo Comm Tech
+#use Olsonhost\Ect\Init;
+
+# This gives us the power of many!!
+if (file_exists('../vendor/autoload.php')) {
+    require '../vendor/autoload.php';
+}
+
+//require '../vendor/autoload.php';
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
-//$y = $controller = new Controller(true);
 
-//doCli();
+
+doCli();
+
+// Example usage:
+//$exampleString = "Hello @dash(test123(nested)) World";
+//echo "PARSE:" . $exampleString . "\n";
+//$x = processMacroString($exampleString);
+//
+//var_dump($x);
+
+////echo "\n\n\n";
+
+// Example usage:
+/////$exampleString = file_get_contents('/var/www/yore/pages/_domains/chsapp.com/signin/views/nurse.html');
+
+////$exampleString = "Blah @chs('nurse') Blah (this)";
+//echo "PARSE:" . $exampleString . "\n";
+////$x = processMacroString($exampleString);
+
+
+
 
 function doCli()
 {
+    $y = $controller = new Controller(true);
+
     $prompt = "Yore> ";
     while (true) {
         $input = readline($prompt);
@@ -53,13 +103,14 @@ function doCli()
 
         try {
             // Example usage:
-            $input = "(1 + 2) * 3 - 4 / 2";
-            $input = "abs(-5) + iif(0) + iif(3)";
-            $input = "abs(-5.5) + iif(0) + iif(3) + (3.14 * 2) - (-1.25)";
-            // Wow, ChatGPT write me a recursive descent parser with functions
-            $result = parse_expression($input);
-            echo "Result: " . $result . "\n";  // Output: Result: 7
-            //eval($input);
+            // Wow, ChatGPT wrote me a recursive descent parser with functions
+                //$input = "(1 + 2) * 3 - 4 / 2";
+                //$input = "abs(-5) + iif(0) + iif(3)";
+                //$input = "abs(-5.5) + iif(0) + iif(3) + (3.14 * 2) - (-1.25)";
+
+                //$result = parse_expression($input);
+                //echo "Result: " . $result . "\n";  // Output: Result: 7
+            eval($input);
         } catch (Throwable $e) {
             echo "Error: " . $e->getMessage() . PHP_EOL;
         }
@@ -325,19 +376,3 @@ function matchBalancedParentheses($str) {
 
     return $result;
 }
-
-// Example usage:
-//$exampleString = "Hello @dash(test123(nested)) World";
-//echo "PARSE:" . $exampleString . "\n";
-//$x = processMacroString($exampleString);
-//
-//var_dump($x);
-
-echo "\n\n\n";
-
-// Example usage:
-$exampleString = file_get_contents('/var/www/yore/pages/_domains/chsapp.com/signin/views/nurse.html');
-
-$exampleString = "Blah @chs('nurse') Blah (this)";
-//echo "PARSE:" . $exampleString . "\n";
-$x = processMacroString($exampleString);

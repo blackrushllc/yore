@@ -27,13 +27,36 @@ if ($brb) exit('<h1 style="text-align:center;width:100%;font-size:700%;font-fami
 session_start();
 
 # This thing does everything
-use App\Controller;
+use \App\Controller;
 
+// Autoload function
+spl_autoload_register(function ($class_name) {
+    // Define the base directory for the "App" namespace
+    $base_dir = __DIR__ . '/../app/';
+
+    // Check if the class is within the "App" namespace
+    $namespace = 'App\\';
+    if (strncmp($namespace, $class_name, strlen($namespace)) === 0) {
+        // Remove the namespace prefix
+        $relative_class = substr($class_name, strlen($namespace));
+
+        // Replace the namespace separator with the directory separator
+        $file = $base_dir . str_replace('\\', DIRECTORY_SEPARATOR, $relative_class) . '.php';
+
+        // If the file exists, require it
+        if (file_exists($file)) {
+            require $file;
+        }
+    }
+});
 # If we're gonna be using Evo Comm Tech
 #use Olsonhost\Ect\Init;
 
 # This gives us the power of many!!
-require '../vendor/autoload.php';
+if (file_exists('../vendor/autoload.php')) {
+    require '../vendor/autoload.php';
+}
+
 
 # Show me all my mitsakes
 error_reporting(E_ALL);

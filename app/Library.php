@@ -48,7 +48,7 @@ class Library
 
     public $modules;
 
-    public $users=null, $database=null, $logging=null; // These are shortcuts from the $modules array for convenience
+    public $users=null, $database=null, $logging=null, $mail=null; // These are shortcuts from the $modules array for convenience
 
 
 #### ##    ## #### ########
@@ -204,6 +204,7 @@ class Library
                case 'Users':    $this->users    = $module; break; // i.e. $controller->users
                case 'Database': $this->database = $module; break;
                case 'Logging':  $this->logging  = $module; break;
+               case 'Mail':  $this->mail  = $module; break;
            }
        }
 
@@ -338,4 +339,35 @@ class Library
         exit($exitString);
     }
 
+    /**
+     * @param $msg
+     * @return void
+     *
+     * Go back to referring page with a message
+     */
+    public function back($msg = '', $data = false) {
+
+        $page = $_SERVER['HTTP_REFERER'] ?? "/";
+        $_SESSION['redirect_msg'] = $msg;
+        $_SESSION['redirect_data'] = $data;
+        header('Location: ' . $page);
+        exit();
+
+    }
+
+    /**
+     * @param $msg
+     * @return void
+     *
+     * Go back to referring page with a message
+     */
+    public function home($msg = '', $data = false) {
+
+        $page = "/";
+        $_SESSION['redirect_success'] = $msg;
+        $_SESSION['redirect_data'] = $data;
+        header('Location: ' . $page);
+        exit();
+
+    }
 }

@@ -29,6 +29,7 @@ SHOULD BE MORE LIKE THIS:
 BECAUSE
 
 /pages/   .................................... all pages
+      /admin/ ................................ server administration pages
       /_domains/  ............................ all subdomain pages
       /default/   ............................ all else pages (no subdomain)
               /modules  ...................... can override module views, etc

@@ -1,0 +1,11 @@
+{
+  "from_address":  "info@trackmysolutions.us",
+  "from_name":  "true",
+  "username":  "postmaster@mg.trackmyvaccine.com",
+  "password":  "gL6W3z2b7mLvb/uEjr8tef9r5BzapzTKSOMy9DGewdUo2bZEf2Cn5A9PYn0YeFEkRzw=",
+  "cipher":  "AES-128-CTR",
+  "driver":  "smtp",
+  "host":  "smtp.mailgun.org",
+  "port":  "587",
+  "encryption":  "tls"
+}
