@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Generator</title>
+</head>
+<body>
+
+<h2>Generate a QR Code for a Custom Link</h2>
+
+<!-- Form with two input fields -->
+<form id="qrForm">
+  <label for="arg1">Argument 1:</label>
+  <input type="text" id="arg1" name="arg1" required><br><br>
+
+  <label for="arg2">Argument 2:</label>
+  <input type="text" id="arg2" name="arg2" required><br><br>
+
+  <button type="submit">Generate QR Code</button>
+</form>
+
+<!-- Container for the generated QR code -->
+<div id="qrCodeContainer" style="margin-top: 20px;"></div>
+
+<!-- Include the QRCode.js library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+  const form = document.getElementById('qrForm');
+  const qrCodeContainer = document.getElementById('qrCodeContainer');
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    // Clear previous QR code, if any
+    qrCodeContainer.innerHTML = '';
+
+    // Get values of arg1 and arg2
+    const arg1 = document.getElementById('arg1').value;
+    const arg2 = document.getElementById('arg2').value;
+
+    // Construct the URL
+    const url = `https://mydomain.com/${arg1}/${arg2}`;
+
+    // Generate the QR code
+    new QRCode(qrCodeContainer, {
+      text: url,
+      width: 250,
+      height: 250
+    });
+  });
+</script>
+
+</body>
+</html>

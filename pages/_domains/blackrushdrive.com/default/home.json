@@ -1,0 +1,15 @@
+{
+  "domain": "blackrush.us",
+  "site": "default",
+  "page": "home",
+  "title": "Blackrush Entertainment",
+  "theme": "blackrush",
+  "desc": "This is the BLACKRUSH default site home page",
+  "body": "This is the body of the 'blackrush' domain, 'default' site, 'home' page",
+  "view": "frontpage",
+  "views": [],
+  "example_fred_var": "Yo ho ho",
+  "security": false,
+  "public": true,
+  "markdown": true
+}

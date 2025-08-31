@@ -1,0 +1,25 @@
+<script>
+    if ( ("@session('role')" != 'user') && ("@session('role')" != 'admin') )  location.href='/module/users/login';
+</script>
+<!--<h1>CRUD GENERATED ADD PAGE - @session('username') (@session('role'))</h1>-->
+@flash()
+<a href="/reports/index">Go Back to List</a>
+<hr>
+<p>
+    <h4>Add Record</h4>
+    @form('post')
+    @app_post("addreports")
+    <!-- content -->
+    
+<!-- ADD FIELDS -->
+
+    @input("category_name","Category Name","Category Name:","")
+    @input("report_name","Report Name","Report Name:","")
+    @textarea("report_query","Report Query","Report Query:","")
+    @textarea("description","Description","Description:","")
+
+<!-- END FIELDS -->
+    <!-- end content -->
+    @submit('Save')
+    @endform()
+</p>

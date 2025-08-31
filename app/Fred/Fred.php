@@ -12,7 +12,27 @@
  ░          ░  ░     ░  ░░ ░      ░  ░      ░        ░           ░   ░  ░  ░
       ░                  ░
 
+MIT License
 
+Copyright (c) 2025 Erik Lee Olson for Blackrush, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 */
 
@@ -63,6 +83,8 @@ class Fred
     }
 
     function prep($output) {
+
+        if (empty($output)) return $output;
         // step 1, replace all @aphatwelve( with chr(1) + APHATWELVE
         // Find all possible @functions and replace them with ¢FUNCTIONS
 
@@ -77,7 +99,7 @@ class Fred
                 break;
             }
 
-            if ($this->isAlphaStringLessThan12($strung)) {
+            if ($this->isAlphaStringLessThan24($strung)) {
 
                 $output = str_replace('@' . $strung . '(', '¢' . strtoupper($strung) . '(', $output);
 
@@ -100,6 +122,8 @@ class Fred
     }
 
     function exec($output) {
+
+        if (empty($output)) return $output;
 
         // original - hello @say('world') yay
 
@@ -127,8 +151,9 @@ class Fred
 
         $tail = $expr[1];
 
-        // TODO: handle literals, vars, etc.  Right now just assuming a quoted string and that's all
-        $tail = str_replace(['"', "'"], '', $tail); // just remove quotes
+        $tail = $this->parseCsvString($tail);
+
+        if ((gettype($tail) == 'array') and (count($tail) == 1)) $tail = $tail[0];
 
         switch($head) {
             case 'ASSET':
@@ -152,7 +177,79 @@ class Fred
             case 'SESSION':
                 $command = $_SESSION[$tail] ?? '';
                 break;
+            case 'EMPTY':
 
+                if (empty($tail[0]))
+                    $command = $tail[1];
+                else
+                    $command = $tail[0];
+
+                break;
+            case 'BYTES':
+                $command = $this->formatBytes($tail);
+                break;
+            case 'FORM':
+                $command="<form name='fredform1' class='fred_form' method='$tail'><table class='fred_form'>";
+                break;
+            case 'ENDFORM':
+                $command="</table></form>";
+                break;
+            case 'SUBMIT':
+                $command="<tr><td></td><td><input type='submit' value='$tail'></td></tr>";
+                break;
+            case 'EMAIL':
+                $name = $tail[0] ?? '';
+                $placeholder = $tail[1] ?? '';
+                $title=$tail[2] ?? '';
+                $value = $tail[3] ?? '';
+                $command = "<tr><th>$title</th><td><input type='email' name='$name' id='$name' placeholder='$placeholder' value='$value'></td></tr>";
+                break;
+            case 'DATE':
+                $name = $tail[0] ?? '';
+                $placeholder = $tail[1] ?? '';
+                $title=$tail[2] ?? '';
+                $value = $tail[3] ?? '';
+                $command = "<tr><th>$title</th><td><input type='date' name='$name' id='$name' placeholder='$placeholder' value='$value'></td></tr>";
+                break;
+            case 'INPUT':
+                $name = $tail[0] ?? '';
+                $placeholder = $tail[1] ?? '';
+                $title=$tail[2] ?? '';
+                $value = $tail[3] ?? '';
+                $command = "<tr><th>$title</th><td><input type='text' name='$name' id='$name' placeholder='$placeholder' value='$value'></td></tr>";
+                break;
+            case 'NUMBER':
+                $name = $tail[0] ?? '';
+                $placeholder = $tail[1] ?? '';
+                $title=$tail[2] ?? '';
+                $value = $tail[3] ?? '';
+                $command = "<tr><th>$title</th><td><input type='number' name='$name' id='$name' placeholder='$placeholder' value='$value'></td></tr>";
+                break;
+            case 'IMAGE':
+                $name = $tail[0] ?? '';
+                $placeholder = $tail[1] ?? '';
+                $title=$tail[2] ?? '';
+                $value = $tail[3] ?? '';
+                if ($value) {
+                    $command = "<tr><th>$title</th><td><img class='pop-image' style='height:100px' id='$name' alt='$placeholder' src='$value'/></td></tr>";
+                } else {
+                    $command = "";
+                }
+                break;
+            case 'TEXTAREA':
+                $name = $tail[0] ?? '';
+                $placeholder = $tail[1] ?? '';
+                $title=$tail[2] ?? '';
+                $value = $tail[3] ?? '';
+                $command = "<tr><th>$title</th><td><textarea class='textarea_$name' name='$name' id='$name' placeholder='$placeholder'>$value</textarea></td></tr>";
+                break;
+            case 'CHECKBOX':
+                $name = $tail[0] ?? '';
+                $title=$tail[1] ?? '';
+                $value = $tail[2] ?? '';
+                $checked = empty($value) ? '':'checked';
+                $command = "<tr><th>$title</th><td><input type='checkbox' $checked name='$name' id='$name'></td></tr>";
+                break;
             default:
 
                 // SO.. we need to see if any $module classes have a Fred function
@@ -176,11 +273,15 @@ class Fred
                             // Call the method and pass $tail as the argument
                             $temp .= "EXISTS";
                             $command = $module->$method($tail);
-                            // If more than 1 module has a fred_ function then we're going to call them all!
 
+                            // Just in case the output contains Fred
+                            $command = $this->prep($command);
+                            $command = $this->exec($command);
+
+                            // If more than 1 module has a fred_ function then we're going to call them all!
                             break; // Actually no lets not but maybe warn?
                         } else {
-                            $temp .= "NOT!";
+                            $temp .= "NOT1!";
                         }
                     }
                 }
@@ -213,10 +314,10 @@ class Fred
         return substr($string, $start + 1, $length);
     }
 
-    function isAlphaStringLessThan12($string) {
+    function isAlphaStringLessThan24($string) {
         $pattern = '/^[a-zA-Z_]+$/';
 
-        if (strlen($string) <= 12 && preg_match($pattern, $string)) { // thanks ChatGPT!
+        if (strlen($string) <= 24 && preg_match($pattern, $string)) { // thanks ChatGPT!
             return true;
         } else {
             return false;
@@ -227,12 +328,14 @@ class Fred
 
     function execute($head, $tail) {
 
-        //return "[ RESULT OF do $head with $tail ]";
+        //return "[ RESULT OF do $head with $tail ]"; `
 
         $ret = null;
 
-        // TODO: handle literals, vars, etc.  Right now just assuming a quoted string and that's all
-        $tail = str_replace(['"', "'"], '', $tail); // just remove quotes
+        $tail = $this->parseCsvString($tail);
+
+        if (count($tail) == 1) $tail = $tail[0];
+
 
         switch(strtoupper($head)) {
             case 'ASSET':
@@ -255,6 +358,16 @@ class Fred
                 break;
             case 'SESSION':
                 $ret = $_SESSION[$tail] ?? '';
+                break;
+            case 'EMPTY':
+                if (empty($tail[0]))
+                    $ret = $tail[1];
+                else
+                    $ret = $tail[0];
+
+                break;
+            case 'BYTES':
+                $ret = $this->formatBytes($tail);
                 break;
 
             default:
@@ -280,11 +393,15 @@ class Fred
                             // Call the method and pass $tail as the argument
                             $temp .= "EXISTS";
                             $ret = $module->$method($tail);
-                            // If more than 1 module has a fred_ function then we're going to call them all!
 
+                            // Just in case the output contains Fred
+                            $ret = $this->prep($ret);
+                            $ret = $this->exec($ret);
+
+                            // If more than 1 module has a fred_ function then we're going to call them all!
                             break; // Actually no lets not but maybe warn?
                         } else {
-                            $temp .= "NOT!";
+                            $temp .= "NOT2!";
                         }
                     }
                 }
@@ -355,5 +472,31 @@ class Fred
 
         return $result;
     }
+
+    function parseCsvString($inputString) {
+        // Check if the string contains quotes or commas
+        if (strpos($inputString, ',') !== false || strpos($inputString, '"') !== false || strpos($inputString, "'") !== false) {
+            // Parse the string as a CSV
+
+            $inputString = str_replace("'", '"', $inputString);
+            $parsedArray = str_getcsv($inputString);
+            return $parsedArray;
+        } else {
+            // If no quotes or commas, return the string itself
+            return $inputString;
+        }
+    }
+    function formatBytes($bytes) {
+        if ($bytes === 0) return '0B';  // Handle zero case
+
+        $sizes = ['B', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];  // Units for bytes
+        $i = floor(log($bytes, 1024));  // Determine the magnitude
+
+        // Format the number with one decimal point and the appropriate unit
+        $formattedNumber = round($bytes / pow(1024, $i), 1);
+
+        return $formattedNumber . $sizes[$i];
+    }
+
 
 }

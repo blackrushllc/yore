@@ -1,0 +1,30 @@
+<script>
+    if ( ("@session('role')" != 'user') && ("@session('role')" != 'admin') )  location.href='/module/users/login';
+</script>
+<!--<h1>CRUD GENERATED EDIT PAGE - @session('username') (@session('role'))</h1>-->
+@flash()
+<a href="/reports/index">Go Back to List</a>
+<hr>
+<p>
+    <h4>Edit Record @field("id")</h4>
+    @form('post')
+    @app_post("editreports")
+    <!-- content -->
+    
+<!-- FIELDS -->
+
+    @input("category_name","Category Name","Category Name:","@field("category_name")")
+    @input("report_name","Report Name","Report Name:","@field("report_name")")
+    @textarea("report_query","Report Query","Report Query:","@field("report_query")")
+    @textarea("description","Description","Description:","@field("description")")
+
+<!-- END FIELDS -->
+    <!-- end content -->
+    @submit('Save')
+    @endform()
+</p>
+<pre>
+    Created: @field("created_at")
+    Updated: @field("updated_at")
+    Deleted: @field("deleted_at")
+    @fetch("SELECT * FROM app_yw_reports WHERE ID=@arg(1)") Columns in 1 row</pre>

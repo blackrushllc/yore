@@ -1,0 +1,30 @@
+<script>
+    if ( ("@session('role')" != 'admin') && ("@session('role')" != 'user') )  location.href='/module/users/login';
+</script>
+<!--<h1>CRUD GENERATED EDIT PAGE - @session('username') (@session('role'))</h1>-->
+@flash()
+<a href="/emails/index">Go Back to List</a>
+<hr>
+<p>
+    <h4>Edit Record @field("id")</h4>
+    @form('post')
+    @app_post("editemails")
+    <!-- content -->
+    
+<!-- FIELDS -->
+
+    
+    
+    
+    @input("slug","Slug","Slug:","@field("slug")")
+    @textarea("body","Body","Body:","@field("body")")
+<!-- END FIELDS -->
+    <!-- end content -->
+    @submit('Save')
+    @endform()
+</p>
+<pre>
+    Created: @field("created_at")
+    Updated: @field("updated_at")
+    Deleted: @field("deleted_at")
+    @fetch("SELECT * FROM app_yw_emails WHERE ID=@arg(1)") Columns in 1 row</pre>

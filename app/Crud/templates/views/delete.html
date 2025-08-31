@@ -1,0 +1,10 @@
+<script>
+    if ( ("@session('role')" != 'admin') && ("@session('role')" != 'readonly') )  location.href='/module/users/login';
+</script>
+<!--<h1>CRUD GENERATED DELETE PAGE - @session('username') (@session('role'))</h1>-->
+@flash()
+<a href="/<?= $site ?>/index">Go back to Index</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/<?= $site ?>/deleted">Go To Trash</a>
+<hr>
+<h4><?= $title ?></h4>
+<p>Record has been deleted</p>
+<pre>@<?= $prefix ?>_delete(@arg(1))</pre>

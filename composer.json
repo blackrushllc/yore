@@ -12,8 +12,14 @@
         "ext-curl": "*",
         "ext-json": "*",
         "guzzlehttp/guzzle": "^7.7",
+        "illuminate/events": "~11.7.0",
+        "illuminate/filesystem": "~11.7.0",
+        "illuminate/view": "~11.7.0",
+        "jenssegers/blade": "^2.0",
         "olsonhost/ect": "dev-main",
         "olsonhost/fred": "dev-main",
+        "phpmailer/phpmailer": "^6.9",
+        "phpoffice/phpspreadsheet": "^2.2",
         "twilio/sdk": "^7.4"
     },
     "require-dev": {
@@ -32,7 +38,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Modules\\": "modules/"
         },
         "classmap": [
 

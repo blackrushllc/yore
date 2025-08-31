@@ -14,6 +14,28 @@ Copyright (C) 2024, Blackrush LLC, All Rights Reserved
 Created by Erik Olson, Tarpon Springs, Florida
 For more information, visit BlackrushDrive.com
 
+MIT License
+
+Copyright (c) 2025 Erik Lee Olson for Blackrush, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
 /app/Controller.php - This is the main website program. All HTML endpoints are processed by this
 
 */
@@ -34,7 +56,7 @@ class Controller extends Library {
     /**
      * @var mixed|string
      */
-    public $page;
+    public $page, $view_file;
 
     public $data, $json;
 
@@ -64,7 +86,7 @@ class Controller extends Library {
         // https://yoreweb.com/ho/ha/this/that/tother
         // array(5) { [0]=> string(2) "ho" [1]=> string(2) "ha" [2]=> string(4) "this" [3]=> string(4) "that" [4]=> string(6) "tother" }
 
-        if (!$this->is_module) {
+        if (!$this->is_module) { // URL is not a module route
 
             // Get the json for this page (from disk or perhaps a data source)
             if (!$this->json()) {
@@ -82,7 +104,7 @@ class Controller extends Library {
             }
         }
 
-        if ($this->is_module) {
+        if ($this->is_module) { // URL is a module route
 
             $this->moduleProcess();
 
@@ -129,7 +151,7 @@ class Controller extends Library {
             $this->abort(500, "Empty Module Array");
         }
 
-        // https://yobasic.com/api/users/login?username=erik&password=mermaid to LOGIN or provide incomplete creds to LOGOUT
+        // https://yobasic.com/api/users/login?username=erik&password=password to LOGIN or provide incomplete creds to LOGOUT
 
         foreach ($this->modules as $site => $module) {
             $temp[] = strtolower($site . '/' . 'api_' . $this->name);
@@ -145,9 +167,10 @@ class Controller extends Library {
             }
         }
         echo "<pre>";
+        echo('ERROR: MISSING MODULE OR METHOD: ' . 'web_' . $this->name . ' -  I LOOKED EVERYWHERE :/\n');
         var_dump($temp);
         var_dump($this);
-        exit('ERROR: MISSING MODULE OR METHOD. I LOOKED EVERYWHERE :/');
+        exit;
 
     }
     /**
@@ -176,9 +199,11 @@ class Controller extends Library {
             }
         }
         echo "<pre>";
+        echo('ERROR: MISSING MODULE OR METHOD: ' . 'web_' . $this->name . ' -  I LOOKED EVERYWHERE :/\n');
         var_dump($temp);
         var_dump($this);
-        exit('ERROR: MISSING MODULE OR METHOD. I LOOKED EVERYWHERE :/');
+        exit;
+
 
     }
 
@@ -191,7 +216,7 @@ class Controller extends Library {
         # $this->html = $this->data->body;
 
         // default site is 'default'
-        // default view name is 'home'
+        // default view name is 'home' UNLESS $_SESSION['view'] has something
         // https://{domain}/{site=default}/{name=home}
 
 
@@ -199,8 +224,9 @@ class Controller extends Library {
             $this->site = 'default';
         }
 
-        if (empty($this->data->view)) {
-            $this->data->view = 'home';
+        // "home" page *view* overrides "home" page json even if it's set in page json. OR it defaults to 'home' if not set
+        if (empty($this->data->view) or ($this->data->page == 'home')) {
+            $this->data->view = $_SESSION['view'] ?? ($this->data->view ?? 'homepage');
         }
 
         // See if there is a "/pages/site/view/xxx.html"
@@ -209,14 +235,80 @@ class Controller extends Library {
         // See if there is a /pages/_domains/DOMAIN_NAME/site/view/xxx.html
         $domain_view  = '../pages/_domains/' . $this->domain . '/' . $this->site . '/views/' . $this->data->view . '.html';
 
-        if (file_exists($domain_view)) {
+        // See if there is a /pages/_domains/DOMAIN_NAME/site/view/xxx.blade.php
+        $domain_blade_view  = '../pages/_domains/' . $this->domain . '/' . $this->site . '/views/' . $this->data->view . '.blade.php';
 
-            $this->html = file_get_contents($domain_view); // This is our whole tire content
+
+        $role_view = null;
+        $role_blade_view = null;
+        if (!empty($_SESSION['role'])) {
+            if (!empty($this->data->views)) { // array of role => view name
+                $roleViews = (array)$this->data->views;
+                if (!empty($roleViews[$_SESSION['role']]))
+                    // We *might* have an alternate view based on Role being suggested here...
+                    $role_view = '../pages/_domains/' . $this->domain . '/' . $this->site . '/views/' . $_SESSION['role'] . '.html';
+                    $role_blade_view = '../pages/_domains/' . $this->domain . '/' . $this->site . '/views/' . $_SESSION['role'] . '.blade.php';
+            }
+        }
+
+        //dd([$role_view, $default_view, $domain_view, $this->data, $_SESSION, $role_view, $role_blade_view, $domain_blade_view]);
+        //[
+        //    null,
+        //    "..\/pages\/default\/views\/user.html",
+        //    "..\/pages\/_domains\/app.luxecardclub.com\/default\/views\/user.html",
+        //    {
+        //        "domain": "app.luxecardclub.com",
+        //        "site": "default",
+        //        "page": "home",
+        //        "title": "App",
+        //        "theme": "lcc",
+        //        "desc": "This is a the home page for app.luxecardclub.com",
+        //        "body": "This is the body of the 'app.luxecardclub.com' domain, 'default' site, 'home' page",
+        //        "view": "user",
+        //        "views": [],
+        //        "example_fred_var": "Yo ho ho",
+        //        "security": false,
+        //        "public": true,
+        //        "markdown": true
+        //    },
+        //    null,
+        //    null,
+        //    "..\/pages\/_domains\/app.luxecardclub.com\/default\/views\/user.blade.php"
+        //]
+        if ($role_blade_view && file_exists($role_blade_view)) {
+
+           $role_blade_view = str_replace('../pages/_domains/' . $this->domain . '/' . $this->site . '/views/', '', $role_blade_view);
+           $role_blade_view = str_replace('.blade.php','', $role_blade_view);
+            //dd($role_blade_view);
+            // pages/_domains/app.luxecardclub.com/default/views/admin.blade.php
+            $this->html =  $this->render($role_blade_view); // This is our alternate blade view based on Role
+            $this->view_file = $role_blade_view;
+
+        } elseif ($role_view && file_exists($role_view)) {
+
+            $this->html = file_get_contents($role_view); // This is our alternate html view based on Role
+            $this->view_file = $role_view;
+
+        } elseif (file_exists($domain_blade_view)) {
+
+            $this->html = $this->render($domain_blade_view); // This is our whole tire blade content
+            $this->view_file = $domain_blade_view;
+
+        } elseif (file_exists($domain_view)) {
+
+            $this->html = file_get_contents($domain_view); // This is our whole tire htm content
+            $this->view_file = $domain_view;
 
         } else {
 
-            $this->html = file_get_contents($default_view); // Just a template that displays @body()
+            if (file_exists($default_view)) {
+                $this->html = file_get_contents($default_view); // Just a template that displays @body()
+                $this->view_file = $default_view;
 
+            } else {
+
+                $this->abort(500, "View File Missing - $domain_view / $default_view / $role_view / $role_blade_view");
+            }
         }
 
         if (empty($this->html)) $this->html="@body()";
@@ -329,7 +421,7 @@ class Controller extends Library {
             JS (src's)
             Footer
         ] -> then ->
-            ---------------> PH@
+            ---------------> @Fred
             ----------------> Module Filters
             -----------------> BrOwSeR
 
@@ -380,7 +472,72 @@ class Controller extends Library {
 //        </main>
 //        ";
 
-        $this->output .= $this->html;
+
+
+        ##     ## #### ######## ##      ##         ##   ######## ########  #### ########
+        ##     ##  ##  ##       ##  ##  ##        ##    ##       ##     ##  ##     ##
+        ##     ##  ##  ##       ##  ##  ##       ##     ##       ##     ##  ##     ##
+        ##     ##  ##  ######   ##  ##  ##      ##      ######   ##     ##  ##     ##
+         ##   ##   ##  ##       ##  ##  ##     ##       ##       ##     ##  ##     ##
+          ## ##    ##  ##       ##  ##  ##    ##        ##       ##     ##  ##     ##
+           ###    #### ########  ###  ###    ##         ######## ########  ####    ##
+
+
+        switch ($this->arg1) {
+
+            case 'edit':
+                $_SESSION['fetch'] = '/' . $this->site . '/' . $this->name . '/load';
+                $_SESSION['save'] = '/' . $this->site . '/' . $this->name . '/save';
+                $editor_file = __DIR__ . '/includes/edit.html';
+                $this->output .= file_get_contents($editor_file);
+                break;
+
+            case 'load': // Move this to top of Assemble
+                echo $this->html;
+                exit;
+                break;
+
+            case 'save': // Move this to top of Assemble
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content'])) {
+                    $content = $_POST['content'];
+                    $filename = $this->view_file;
+
+
+                    // There is no point in saving a backup of the editor file
+                    // unless you roll the backups and/or have a "publish" function
+                    // and the ability to revert to the last "published" version.
+
+                    //$backupFilename = $filename . '.' . date('d'); // Get current day of the month
+                    //$backupFilename = $filename . '.bak';
+
+                    // Check if the document exists
+//                    if (file_exists($filename)) {
+//                        // Rename the existing file to file.html.dd
+//                        if (!rename($filename, $backupFilename)) {
+//                            $this->abort(500, "Error: Could not rename the existing document.");
+//                          }
+//                    }
+
+                    // Save the new content
+                    if (file_put_contents($filename, $content) !== false) {
+                        exit('Document saved successfully');
+                    } else {
+                        $this->abort(500, "Error: Could not save the document.");
+                    }
+                } else {
+                    $this->abort(500, "Error: Invalid request.");
+                 }
+                $this->abort(500, "Error: This should never happen :/");
+                break;
+            default:
+                $this->output .= $this->html;
+        }
+
+
+
+
+
+
 
               ##    ###    ##     ##    ###     ######   ######  ########  #### ########  ########
               ##   ## ##   ##     ##   ## ##   ##    ## ##    ## ##     ##  ##  ##     ##    ##

@@ -1,11 +1,80 @@
 Yore - A Framework for Applications
+```
+▄▄▄▄    ██▓    ▄▄▄       ▄████▄   ██ ▄█▀ ██▀███   █    ██   ██████  ██░ ██
+▓█████▄ ▓██▒   ▒████▄    ▒██▀ ▀█   ██▄█▒ ▓██ ▒ ██▒ ██  ▓██▒▒██    ▒ ▓██░ ██▒
+▒██▒ ▄██▒██░   ▒██  ▀█▄  ▒▓█    ▄ ▓███▄░ ▓██ ░▄█ ▒▓██  ▒██░░ ▓██▄   ▒██▀▀██░
+▒██░█▀  ▒██░   ░██▄▄▄▄██ ▒▓▓▄ ▄██▒▓██ █▄ ▒██▀▀█▄  ▓▓█  ░██░  ▒   ██▒░▓█ ░██
+░▓█  ▀█▓░██████▒▓█   ▓██▒▒ ▓███▀ ░▒██▒ █▄░██▓ ▒██▒▒▒█████▓ ▒██████▒▒░▓█▒░██▓
+░▒▓███▀▒░ ▒░▓  ░▒▒   ▓▒█░░ ░▒ ▒  ░▒ ▒▒ ▓▒░ ▒▓ ░▒▓░░▒▓▒ ▒ ▒ ▒ ▒▓▒ ▒ ░ ▒ ░░▒░▒
+▒░▒   ░ ░ ░ ▒  ░ ▒   ▒▒ ░  ░  ▒   ░ ░▒ ▒░  ░▒ ░ ▒░░░▒░ ░ ░ ░ ░▒  ░ ░ ▒ ░▒░ ░
+░    ░   ░ ░    ░   ▒   ░        ░ ░░ ░   ░░   ░  ░░░ ░ ░ ░  ░  ░   ░  ░░ ░
+░          ░  ░     ░  ░░ ░      ░  ░      ░        ░           ░   ░  ░  ░
+░                  ░
+
+```
+
+```
+Copyright (C) 2024, Blackrush LLC, All Rights Reserved
+Created by Erik Olson, Tarpon Springs, Florida
+For more information, visit BlackrushDrive.com
+```
+
+
+MIT License
+
+Copyright (c) 2025 Erik Lee Olson for Blackrush, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+
 
 # Purpose
 
-My goal with this project is to create a _prototype_ application framework which
-can render a complete web site without storing any of the custom MVC code locally.
+Yore is a web framework for building applications and multi-site domain hosting.
 
-The MVC code, consisting of JSON data, HTML views, and a new script language system can be built manually using a directory structure and then compiled to a portable data source, or a web environment can be built to build the sited data directly into the data source without the need for intermediate files.
+This application is still under development with 8 fundamental pillars in mind:
+
++ An All-purpose MVC
++ Versatile View Template Engine
++ Tightly integrated Module Engine
++ Server-side Controller Programming Language
++ Apps can be deployed anywhere you can store data
++ Yore apps can be interconnected and remotely instantiate classes
++ Yore has built-in version control and deployment
++ The Yore frameworks are ported to numerous programming languages serving the same content
+
+## Yore is not complete!  Where fundamental pillars fail to provide features, I am currently coding into Custom Modules
+
+((MY LONG TERM GOAL FOR THIS FRAMEWORK IS NOT NOT HAVE TO RELY ON CUSTOM MODULES TO BUILD ALMOST ANY KIND OF APP))
+
+One of my goals with this project is to create a _prototype_ application framework which
+can render a complete web site without storing any of the custom MVC code locally.  The web server
+(or whatever environment is being used to render the applications) needs only to reference a named
+data source to render the entire app on any device.
+
+Additionally, I intend to have complete abstraction between the rendering server and the site contents,
+allowing for the rendering server to be platform independent and interpreting the content using layers
+written in Php, Go, Python, or even C++ as long as they know how to interpret, execute and render the
+MVC content.
+
+The MVC code, consisting of JSON data, HTML views, and a new script language system can be built manually using a directory structure and then compiled to a portable data source, or a web environment can be built to build the site data directly into the data source without the need for intermediate files.
 
 My current goal is to be able to create the local file structure and compile it to SQL, and then decompile the SQL back down to a local file structure for manual development.
 

@@ -1,5 +1,9 @@
 <?php
+#/web/index.php - This is the main launching point for the whole system. All HTML and API endpoints start here
+
 /*
+
+
  ▄▄▄▄    ██▓    ▄▄▄       ▄████▄   ██ ▄█▀ ██▀███   █    ██   ██████  ██░ ██
 ▓█████▄ ▓██▒   ▒████▄    ▒██▀ ▀█   ██▄█▒ ▓██ ▒ ██▒ ██  ▓██▒▒██    ▒ ▓██░ ██▒
 ▒██▒ ▄██▒██░   ▒██  ▀█▄  ▒▓█    ▄ ▓███▄░ ▓██ ░▄█ ▒▓██  ▒██░░ ▓██▄   ▒██▀▀██░
@@ -14,7 +18,28 @@ Copyright (C) 2024, Blackrush LLC, All Rights Reserved
 Created by Erik Olson, Tarpon Springs, Florida
 For more information, visit BlackrushDrive.com
 
-/web/index.php - This is the main launching point for the whole system. All HTML and API endpoints start here
+MIT License
+
+Copyright (c) 2025 Erik Lee Olson for Blackrush, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
 
 */
 
@@ -24,6 +49,23 @@ $brb = false;
 # This is where all Yore pages start
 if ($brb) exit('<h1 style="text-align:center;width:100%;font-size:700%;font-family: tahoma, serif;margin: 10% 0 0 0;">BRB ...</h1>');
 
+// Set the session timeout to 1 hour (3600 seconds) * 48
+ini_set('session.gc_maxlifetime', 3600 * 48);
+
+$host = $_SERVER['HTTP_HOST'];
+$domain = explode(':', $host)[0];
+
+
+// Make sure the session cookie reflects the same lifetime
+//session_set_cookie_params(3600 * 48);
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => $domain,
+    'secure' => true,
+    'httponly' => true,
+    'samesite' => 'None', // Required for cross-site POSTs to include cookies
+]);
 session_start();
 
 # This thing does everything
@@ -88,7 +130,7 @@ if(isset($_GET['debug'])) dd($C);
 
 function dd($var) {
 
-    echo "<textarea style='position:relative;width:100%;min-height:200px;color:yellow;background-color:black;font-size:50%;bottom:0;'>";
+    echo "<textarea style='position:relative;width:100%;min-height:200px;color:yellow;background-color:black;font-size:80%;bottom:0;'>";
     if (gettype($var) == 'string') echo $var; else echo json_encode($var,JSON_PRETTY_PRINT);
     echo "</textarea>";
 

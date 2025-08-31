@@ -1,0 +1,15 @@
+{
+  "domain": "<?= $domain ?>",
+  "site": "<?= $site ?>",
+  "page": "index",
+  "title": "<?= $title ?>",
+  "theme": "arc",
+  "desc": "This is a the <?= $site ?> edit page for <?= $domain ?>",
+  "body": "This is the body of the '<?= $domain ?>' domain, '<?= $site ?>' site, 'index' page",
+  "view": "index",
+  "views": [],
+  "example_fred_var": "Yo ho ho",
+  "security": false,
+  "public": true,
+  "markdown": true
+}

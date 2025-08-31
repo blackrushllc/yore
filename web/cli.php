@@ -1,5 +1,7 @@
 <?php
+
 /*
+
 
  ▄▄▄▄    ██▓    ▄▄▄       ▄████▄   ██ ▄█▀ ██▀███   █    ██   ██████  ██░ ██
 ▓█████▄ ▓██▒   ▒████▄    ▒██▀ ▀█   ██▄█▒ ▓██ ▒ ██▒ ██  ▓██▒▒██    ▒ ▓██░ ██▒
@@ -11,6 +13,37 @@
  ░    ░   ░ ░    ░   ▒   ░        ░ ░░ ░   ░░   ░  ░░░ ░ ░ ░  ░  ░   ░  ░░ ░
  ░          ░  ░     ░  ░░ ░      ░  ░      ░        ░           ░   ░  ░  ░
       ░                  ░
+Copyright (C) 2024, Blackrush LLC, All Rights Reserved
+Created by Erik Olson, Tarpon Springs, Florida
+For more information, visit BlackrushDrive.com
+
+MIT License
+
+Copyright (c) 2025 Erik Lee Olson for Blackrush, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+*/
+
+
+/*
 
 8    8
 8    8 eeeee eeeee  eeee
@@ -31,7 +64,9 @@ required modules installed
 
 */
 # This thing does everything
+use App\Command;
 use App\Controller;
+use App\Crud\Crud;
 
 
 // Autoload function
@@ -92,14 +127,76 @@ doCli();
 
 function doCli()
 {
-    $y = $controller = new Controller(true);
+    $y = $controller = new Command(true);
 
     $prompt = "Yore> ";
     while (true) {
-        $input = readline($prompt);
+
+        // If a command line argument was passed, use it as the input and then clear it
+        if (isset($GLOBALS['argv'][1]) && $GLOBALS['argv'][1] != '') {
+            $input = $GLOBALS['argv'][1];
+            $GLOBALS['argv'][1] = '';
+            echo $prompt . $input . PHP_EOL;
+        } else {
+            // Display the prompt and get user input
+            $input = readline($prompt);
+        }
+
         if ($input === 'quit') {
             break;
         }
+
+        if ($input == 'create') {
+            $y->create();
+            continue;
+        }
+        if ($input == 'create dry') {
+            $y->create(true);
+            continue;
+        }
+
+        if ($input === 'crud') {
+            // If the 2nd command line argument was passed, use it as the table name
+
+            if (isset($GLOBALS['argv'][2]) && $GLOBALS['argv'][2] != '') {
+                $input = $GLOBALS['argv'][2];
+                $GLOBALS['argv'][2] = '';
+                echo "Site (unprefixed table name): " . $input . PHP_EOL;
+            } else {
+                // Display the prompt and get user input
+                $input = readline("Site (unprefixed table name): "); // if ($input == '') $input = 'users';
+            }
+            if ($input == '') continue;
+            $site = strtolower(trim($input));
+
+            // If the 3RD command line argument was passed, use it as the table name
+            if (isset($GLOBALS['argv'][3]) && $GLOBALS['argv'][3] != '') {
+                $input = $GLOBALS['argv'][3];
+                $GLOBALS['argv'][3] = '';
+                echo "Module Name (prefix and theme): " . $input . PHP_EOL;
+            } else {
+                // Display the prompt and get user input
+                $input = readline("Module Name (prefix and theme) <lcc>: "); if ($input == '') $input = 'lcc';
+            }
+            if ($input == '') continue;
+            $prefix = strtolower(trim($input));
+
+            $input = readline("Table <" . $prefix .'_' . $site . ">: "); if ($input == '') $input = $prefix .'_' . $site;
+            if ($input == '') continue;
+            $table = strtolower(trim($input));
+
+            $input = readline("Domain Name <app.luxecardclub.com>: "); if ($input == '') $input = 'app.luxecardclub.com';
+            if ($input == '') continue;
+            $domain = strtolower(trim($input));
+
+            $C = new Crud($controller, $domain, $table, $site, $prefix);
+
+            echo "Done " . PHP_EOL;
+            exit;
+
+        }
+
+
 
         try {
             // Example usage:

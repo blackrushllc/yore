@@ -1,0 +1,15 @@
+{
+  "domain": "app.yoreweb.com",
+  "site": "emails",
+  "page": "add",
+  "title": "Add Record",
+  "theme": "app",
+  "desc": "This is a the emails edit page for app.yoreweb.com",
+  "body": "This is the body of the 'aapp.yoreweb.com' domain, 'emails' site, 'add' page",
+  "view": "add",
+  "views": [],
+  "example_fred_var": "Yo ho ho",
+  "security": false,
+  "public": true,
+  "markdown": true
+}

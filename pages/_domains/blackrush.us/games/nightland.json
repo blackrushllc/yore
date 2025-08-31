@@ -1,0 +1,15 @@
+{
+  "domain": "blackrush.us",
+  "site": "games",
+  "page": "nightland",
+  "title": "Blackrush Entertainment",
+  "theme": "blackrush",
+  "desc": "This is the BLACKRUSH games site home page games view",
+  "body": "This is the body of the 'blackrush' domain, 'games' site, 'nightland' page, nightland view",
+  "view": "nightland",
+  "views": [],
+  "example_fred_var": "Yo ho ho",
+  "security": false,
+  "public": true,
+  "markdown": true
+}

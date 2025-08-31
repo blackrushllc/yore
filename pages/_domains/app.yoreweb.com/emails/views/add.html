@@ -1,0 +1,25 @@
+<script>
+    if ( ("@session('role')" != 'user') && ("@session('role')" != 'admin') )  location.href='/module/users/login';
+</script>
+<!--<h1>CRUD GENERATED ADD PAGE - @session('username') (@session('role'))</h1>-->
+@flash()
+<a href="/emails/index">Go Back to List</a>
+<hr>
+<p>
+    <h4>Add Record</h4>
+    @form('post')
+    @app_post("addemails")
+    <!-- content -->
+    
+<!-- ADD FIELDS -->
+
+    
+    
+    
+    @input("slug","Slug","Slug:","")
+    @textarea("body","Body","Body:","")
+<!-- END FIELDS -->
+    <!-- end content -->
+    @submit('Save')
+    @endform()
+</p>

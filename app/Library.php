@@ -14,6 +14,28 @@ Copyright (C) 2024, Blackrush LLC, All Rights Reserved
 Created by Erik Olson, Tarpon Springs, Florida
 For more information, visit BlackrushDrive.com
 
+MIT License
+
+Copyright (c) 2025 Erik Lee Olson for Blackrush, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
 /app/Library.php - This is the Controller Parent class, all controllers rendering pages or API data must extend this
 
 */
@@ -28,8 +50,10 @@ For more information, visit BlackrushDrive.com
 
 namespace App;
 
+use App\BladeRenderer;
 use App\Fred\Fred;
 use App\Fred\MarkdownExtra;
+use Illuminate\Container\Container;
 
 /**
  *
@@ -47,6 +71,12 @@ class Library
     public $error_code, $error_message, $error_details;
 
     public $modules;
+
+    public $blade;
+
+    public $modules_array;
+
+    public $flash;
 
     public $users=null, $database=null, $logging=null, $mail=null; // These are shortcuts from the $modules array for convenience
 
@@ -116,6 +146,12 @@ class Library
         $this->arg2 = $this->params[3] ?? false;
         $this->arg3 = $this->params[4] ?? false;
 
+        $modules_temp = '../pages/_domains/' . $this->domain . '/modules.json';
+        if(file_exists($modules_temp)) {
+            $this->modules_array = json_decode(file_get_contents($modules_temp));
+            $this->is_debug = $this->modules_array->debug ?? false;
+        }
+
         // Register all plugins by instantiating each
 
         $modulesDir = __DIR__ . '/../modules/';
@@ -133,6 +169,10 @@ class Library
             foreach ($subdirectories as $subdir) {
                 // Skip the current and parent directory links
                 if ($subdir === '.' || $subdir === '..') {
+                    continue;
+                }
+
+                if(in_array($subdir, $this->modules_array->exclude ?? [])) {
                     continue;
                 }
 
@@ -179,6 +219,7 @@ class Library
                     }
                 }
             }
+
         } else {
             $this->abort(400,"The modules directory does not exist");
         }
@@ -216,6 +257,41 @@ class Library
                     $module->yore_module_post($this, $_REQUEST[$key . '_post']);
             }
         }
+
+        foreach ($this->modules as $key => $module) {
+
+            if (method_exists($module, 'yore_module_post_init'))
+                $module->yore_module_post_init();
+
+        }
+
+
+
+        $cache = __DIR__ . '/../storage/cache/views';
+        // make sure the cache dir exists and is writable
+        if (!is_dir($cache)) {
+            @mkdir($cache, 0775, true);
+        }
+        if (!is_writable($cache)) {
+            $this->abort(500, "The cache directory is not writable: " . $cache);
+        }
+
+        $viewDir = '/var/www/yore/pages/_domains/' . $this->domain . '/' . $this->site . '/views/';
+
+        $globals = [
+            'appName' => 'Yore',
+            'env'     => getenv('APP_ENV') ?: 'development',
+            'controller' => $this
+        ];
+
+
+        if (!Container::getInstance()) {
+            Container::setInstance(new Container());
+        }
+
+
+        $this->blade = new BladeRenderer($viewDir, $cache, $globals);
+
     }
 
 
@@ -268,6 +344,12 @@ class Library
 
     }
 
+    function render(string $name, array $data = []): string
+    {
+        /** @var \App\BladeRenderer $renderer */
+        return $this->blade->render($name, $data);
+    }
+
 
 ########  ########  ######  ##     ## ##       ########
 ##     ## ##       ##    ## ##     ## ##          ##
@@ -318,6 +400,8 @@ class Library
 
         $details = print_r($details, true);
 
+        $stack = $this->getCallStackAsString();
+
         $exitString = "
             <html>
             <body>
@@ -332,6 +416,7 @@ class Library
                 <li>Arg3: {$this->arg3}</li>
             </ul>
             <pre style='width:100%;color:#ffaa55;background-color:black;'>$details</pre>
+            <pre style='width:100%;color:#ffaa55;background-color:black;'>$stack</pre>
             </body>
             </html>
             ";
@@ -359,6 +444,27 @@ class Library
      * @param $msg
      * @return void
      *
+     * Display the current page with a message
+     */
+    public function flash($msg) {
+        $this->flash = $msg;
+    }
+
+    /**
+     * @param $msg
+     * @return void
+     *
+     * Display the current page with a message
+     */
+    public function success($msg = '', $data = false) {
+        $_SESSION['redirect_msg'] = $msg;
+        $_SESSION['redirect_data'] = $data;
+    }
+
+    /**
+     * @param $msg
+     * @return void
+     *
      * Go back to referring page with a message
      */
     public function home($msg = '', $data = false) {
@@ -369,5 +475,54 @@ class Library
         header('Location: ' . $page);
         exit();
 
+    }
+
+    function getCallStackAsString(): string
+    {
+        $stack = debug_backtrace();
+        $output = "";
+
+        foreach ($stack as $index => $frame) {
+            $output .= "Stack level: $index\n";
+            $output .= "File: " . ($frame['file'] ?? '[internal]') . "\n";
+            $output .= "Line: " . ($frame['line'] ?? '[internal]') . "\n";
+            $output .= "Function: " . $frame['function'] . "\n";
+            $output .= "Args: " . json_encode($frame['args']) . "\n\n";
+        }
+
+        return $output;
+    }
+
+    public function hasRole($roles) {
+
+        $r = $_SESSION['role'] ?? false;
+
+        if ($r and in_array($r, $roles)) {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    public function request($parameter) {
+        return $_REQUEST[$parameter] ?? false;
+    }
+
+    function cleanPhoneNumber($input) {
+        // Remove all non-numeric characters
+        $digits = preg_replace('/\D/', '', $input);
+
+        // Remove the first character if it's a "1"
+        if (substr($digits, 0, 1) === '1') {
+            $digits = substr($digits, 1);
+        }
+
+        return $digits;
+    }
+
+    function encodeAll($str) {
+        $hex = unpack('H*', $str);
+        return preg_replace('~..~', '%$0', strtoupper($hex[1]));
     }
 }
