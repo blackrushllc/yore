@@ -1,4 +1,4 @@
-To attract contributors to your PHP MVC framework, consider implementing the following strategies:
+YORE - PHP MVC framework strategies:
 
 1. **Clear Documentation and Tutorials**:
   - Develop comprehensive documentation that explains how to use your framework, its architecture, and how to contribute. Include a README.md file on GitHub with installation instructions, contribution guidelines, and a quick start guide.[](https://github.com/daveh/php-mvc)
@@ -36,4 +36,4 @@ To attract contributors to your PHP MVC framework, consider implementing the fol
 10. **Transparency and Roadmaps**:
   - Share your development roadmap. This not only shows where the project is heading but also gives potential contributors a clear idea of what's expected and what areas might need help.[](https://github.com/php/php-src/blob/master/CONTRIBUTING.md)
 
-By focusing on these areas, you can create an environment that not only attracts contributors but also retains them by ensuring they feel valued and that their contributions make a difference. Remember, maintaining an active and vibrant community requires continuous effort from you and your core team.
+  - Create an environment that not only attracts contributors but also retains them by ensuring they feel valued and that their contributions make a difference. Remember, maintaining an active and vibrant community requires continuous effort.

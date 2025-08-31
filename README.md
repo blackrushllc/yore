@@ -14,11 +14,15 @@ Yore - A Framework for Applications
 ```
 
 ```
-Copyright (C) 2024, Blackrush LLC, All Rights Reserved
+Copyright (C) 2025, Blackrush LLC, All Rights Reserved
 Created by Erik Olson, Tarpon Springs, Florida
 For more information, visit BlackrushDrive.com
 ```
 
+Please see the web/document.htm file for more information about this project and regular updates
+or visit https://yobasic.com/document.htm
+
+Please see INSTALLING.md for installation instructions and tips
 
 MIT License
 
