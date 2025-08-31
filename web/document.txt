@@ -1,4 +1,6 @@
-<h1>Yore Tutorial Script😬🤔</h1>
+<!doctype html>
+<body>
+<h1>Yore Tutorial Script</h1>
 <ol>
 <li>Introduction - What is Yore?
 <ol>
@@ -251,3 +253,4 @@
 </li>
 </ol>
 <p>&nbsp;</p>
+</body>
