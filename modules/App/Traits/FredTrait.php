@@ -153,6 +153,7 @@ trait FredTrait
             'created_at' => 'Created',
             'updated_at' => 'Updated',
             'deleted_at' => 'Deleted',
+            '_id' => ' ID',
             'id' => 'Actions',
             'state' => 'St.',
             'zip' => 'Zip',

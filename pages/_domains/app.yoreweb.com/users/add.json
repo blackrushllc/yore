@@ -4,7 +4,7 @@
   "page": "add",
   "title": "Add Record",
   "theme": "app",
-  "desc": "This is a the users edit page for app.yoreweb.com",
+  "desc": "This is a the users add page for app.yoreweb.com",
   "body": "This is the body of the 'aapp.yoreweb.com' domain, 'users' site, 'add' page",
   "view": "add",
   "views": [],

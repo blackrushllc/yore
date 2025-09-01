@@ -151,7 +151,7 @@ class Controller extends Library {
             $this->abort(500, "Empty Module Array");
         }
 
-        // https://yobasic.com/api/users/login?username=erik&password=password to LOGIN or provide incomplete creds to LOGOUT
+        // https://yobasic.com/api/users/login?username=erik&password=mermaid to LOGIN or provide incomplete creds to LOGOUT
 
         foreach ($this->modules as $site => $module) {
             $temp[] = strtolower($site . '/' . 'api_' . $this->name);
@@ -251,30 +251,6 @@ class Controller extends Library {
             }
         }
 
-        //dd([$role_view, $default_view, $domain_view, $this->data, $_SESSION, $role_view, $role_blade_view, $domain_blade_view]);
-        //[
-        //    null,
-        //    "..\/pages\/default\/views\/user.html",
-        //    "..\/pages\/_domains\/app.luxecardclub.com\/default\/views\/user.html",
-        //    {
-        //        "domain": "app.luxecardclub.com",
-        //        "site": "default",
-        //        "page": "home",
-        //        "title": "App",
-        //        "theme": "lcc",
-        //        "desc": "This is a the home page for app.luxecardclub.com",
-        //        "body": "This is the body of the 'app.luxecardclub.com' domain, 'default' site, 'home' page",
-        //        "view": "user",
-        //        "views": [],
-        //        "example_fred_var": "Yo ho ho",
-        //        "security": false,
-        //        "public": true,
-        //        "markdown": true
-        //    },
-        //    null,
-        //    null,
-        //    "..\/pages\/_domains\/app.luxecardclub.com\/default\/views\/user.blade.php"
-        //]
         if ($role_blade_view && file_exists($role_blade_view)) {
 
            $role_blade_view = str_replace('../pages/_domains/' . $this->domain . '/' . $this->site . '/views/', '', $role_blade_view);
@@ -690,14 +666,15 @@ class Controller extends Library {
 
         $domain_page_json  = '../pages/_domains/' . $this->domain . '/' . $this->site . '/' . $this->name . '.json';
 
+        $page_json = false;
+
         if (file_exists($domain_page_json)) {
-
             $page_json = file_get_contents($domain_page_json);
-
         } else {
+            if (file_exists($default_page_json)) {
 
-            $page_json = file_get_contents($default_page_json);
-
+                $page_json = file_get_contents($default_page_json);
+            }
         }
 
         if (!$page_json) {

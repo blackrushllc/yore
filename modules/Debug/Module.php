@@ -88,7 +88,7 @@ class Module extends Modules {
         $domain = str_replace('app.app.', 'app.', $domain); // err
         $site = $controller->data->site;
         $page = $controller->data->page;
-        $view = $controller->data->view;
+        $view = $controller->data->view ?? 'null?';
         $theme = $controller->data->theme;
 
         $navbar = "jetbrains://php-storm/navigate/reference?project=yorr&path=yore/web/themes/$theme/html/navbar.php";
@@ -152,7 +152,7 @@ $debug = '';
             $domain = str_replace('app.app.', 'app.', $domain); // err
             $site = $controller->data->site;
             $page = $controller->data->page;
-            $view = $controller->data->view;
+            $view = $controller->data->view ?? 'null?';
             $theme = $controller->data->theme;
             $line = 1;
             $str_session = json_encode($_SESSION, JSON_PRETTY_PRINT);

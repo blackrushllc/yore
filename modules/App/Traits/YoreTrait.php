@@ -366,7 +366,7 @@ EOB;
         $site = $controller->data->site;
         $page = $controller->data->page;
         $view = $controller->data->view;
-        $theme = $controller->data->theme;
+        $theme = $controller->data->theme ?? 'null?';
         $user_id = $_SESSION['user_id'] ?? '';
         $debug = '';
 
