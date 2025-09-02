@@ -1,4 +1,6 @@
 vendor/*
 temp/*
 .env
+composer.lock
+x
 xx

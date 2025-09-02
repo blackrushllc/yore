@@ -239,15 +239,26 @@ class Controller extends Library {
         $domain_blade_view  = '../pages/_domains/' . $this->domain . '/' . $this->site . '/views/' . $this->data->view . '.blade.php';
 
 
+        // Initialize variables for role-based views
         $role_view = null;
         $role_blade_view = null;
+
+        // Check if a user role is set in the session
         if (!empty($_SESSION['role'])) {
-            if (!empty($this->data->views)) { // array of role => view name
+            // Check if the page data contains role-based views
+            if (!empty($this->data->views)) { // $this->data->views is an array of role => view name
                 $roleViews = (array)$this->data->views;
-                if (!empty($roleViews[$_SESSION['role']]))
-                    // We *might* have an alternate view based on Role being suggested here...
+
+                // If a view is defined for the current user role, set the corresponding view paths
+                if (!empty($roleViews[$_SESSION['role']])) {
                     $role_view = '../pages/_domains/' . $this->domain . '/' . $this->site . '/views/' . $_SESSION['role'] . '.html';
                     $role_blade_view = '../pages/_domains/' . $this->domain . '/' . $this->site . '/views/' . $_SESSION['role'] . '.blade.php';
+                } else {
+                    if (in_array($_SESSION['role'], $roleViews)) {
+                        $role_view = '../pages/_domains/' . $this->domain . '/' . $this->site . '/views/' . $_SESSION['role'] . '.html';
+                        $role_blade_view = '../pages/_domains/' . $this->domain . '/' . $this->site . '/views/' . $_SESSION['role'] . '.blade.php';
+                    }
+                }
             }
         }
 
@@ -255,7 +266,7 @@ class Controller extends Library {
 
            $role_blade_view = str_replace('../pages/_domains/' . $this->domain . '/' . $this->site . '/views/', '', $role_blade_view);
            $role_blade_view = str_replace('.blade.php','', $role_blade_view);
-            //dd($role_blade_view);
+
             // pages/_domains/app.luxecardclub.com/default/views/admin.blade.php
             $this->html =  $this->render($role_blade_view); // This is our alternate blade view based on Role
             $this->view_file = $role_blade_view;
@@ -282,8 +293,7 @@ class Controller extends Library {
                 $this->view_file = $default_view;
 
             } else {
-
-                $this->abort(500, "View File Missing - $domain_view / $default_view / $role_view / $role_blade_view");
+                $this->abort(404, "View File Missing - $domain_view / $default_view / $role_view / $role_blade_view");
             }
         }
 
@@ -372,7 +382,7 @@ class Controller extends Library {
           "desc": "This is the BLACKRUSH games site home page games view",
           "body": "This is the body of the 'blackrush' domain, 'games' site, 'andromeda' page, andromeda view",
           "view": "andromeda",                  | /pages/_domains/blackrush.us/games/views/andromeda.html
-          "views": [], (not used rn)            | ^ i.e.      /pages/(domain)/(site)/views/(view name).html
+          "views": ['admin','user','foo','etc'],| use a view that matches one of these roles, i.e. rather than "andromeda" use /pages/(domain)/(site)/views/(view name).html
           "example_fred_var": "Yo ho ho",       | Variables that can be referenced by Ph@
           "security": false, (not used rn)
           "public": true, (not used rn)

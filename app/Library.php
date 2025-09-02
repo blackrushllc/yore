@@ -396,30 +396,74 @@ class Library
         $message = $this->error_message ?? $message;
         $details = $this->error_details ?? $details;
 
-        http_response_code($this->error_code);
+        http_response_code($code);
 
         $details = print_r($details, true);
 
         $stack = $this->getCallStackAsString();
 
-        $exitString = "
-            <html>
-            <body>
-            <h1>$code</h1>
-            <p>$message</p>
-            <ul>
-                <li>Domain: {$this->domain}</li>
-                <li>Site: {$this->site}</li>
-                <li>Page Name: {$this->name}</li>
-                <li>Arg1: {$this->arg1}</li>
-                <li>Arg2: {$this->arg2}</li>
-                <li>Arg3: {$this->arg3}</li>
-            </ul>
-            <pre style='width:100%;color:#ffaa55;background-color:black;'>$details</pre>
-            <pre style='width:100%;color:#ffaa55;background-color:black;'>$stack</pre>
-            </body>
-            </html>
-            ";
+        if (($this->name == 'home') and ($this->site == 'default')) {
+            $this->is_debug = true;
+
+        }
+
+
+
+        if ($code == 404) {
+            if ($this->is_debug) {
+                $message = "The page you requested, <b><u><i>{$this->name}</i></u></b>, could not be found 
+                under the site slug <b><u><i>{$this->site}</i></u></b> for domain <b><u><i>{$this->domain}</i></u></b>.
+                <br/><br/>
+                Would you like to create a page at this URL? <br/><br/>
+                
+                <a href='/api/debug/create/page/{$this->site}/{$this->name}' class='btn btn-primary'>Create Page</a>
+                <a href='/' class='btn btn-secondary'>Go Home</a>
+                <br/><br/>
+                If you believe this is an error, please contact the site administrator.
+                <br/><br/>
+                
+                ";
+            } else {
+                $message = "The page you requested, <b><u><i>{$this->name}</i></u></b>, could not be found 
+                under the site slug <b><u><i>{$this->site}</i></u></b> for domain <b><u><i>{$this->domain}</i></u></b>.
+                Please check the URL and try again, 
+                or contact the site administrator if you believe this is an error.";
+            }
+        }
+
+        $exitString = <<< EOT
+<html>
+<head>
+<title>Error $code - $message</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Include bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+<style>
+    body { font-family: Arial, sans-serif; margin: 20px; padding: 20px; background-color: #f4f4f4; color: #333; }
+    h1 { color: #d9534f; }
+    pre { padding: 10px; border-radius: 5px; overflow-x: auto; }
+    ul { list-style-type: none; padding: 0; }
+    li { margin-bottom: 5px; }
+</style>
+</head>
+<body>
+
+<h1>$code</h1>
+<p>$message</p>
+<ul>
+    <li>Domain: {$this->domain}</li>
+    <li>Site: {$this->site}</li>
+    <li>Page Name: {$this->name}</li>
+    <li>Arg1: {$this->arg1}</li>
+    <li>Arg2: {$this->arg2}</li>
+    <li>Arg3: {$this->arg3}</li>
+</ul>
+<pre style='width:100%;color:#ffaa55;background-color:black;'>$details</pre>
+<pre style='width:100%;color:#ffaa55;background-color:black;'>$stack</pre>
+</body>
+</html>
+EOT;
 
         exit($exitString);
     }
