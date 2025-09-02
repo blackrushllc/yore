@@ -2,8 +2,14 @@
   "domain": "default",
   "site": "default",
   "page": "home",
-  "title": "No Title",
-  "theme": "default",
-  "desc": "This is a home page for the default site",
-  "body": "Default: Hello! This is the body of the 'default' site 'home' page!"
+  "title": "App",
+  "theme": "app",
+  "desc": "This is a the home page for app.yoreweb.com",
+  "body": "This is the body of the 'default' domain, 'default' site, 'home' page",
+  "view": "home",
+  "views": [],
+  "example_fred_var": "Yo ho ho",
+  "security": false,
+  "public": true,
+  "markdown": true
 }

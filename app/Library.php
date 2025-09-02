@@ -407,11 +407,10 @@ class Library
 
         }
 
-
-
         if ($code == 404) {
             if ($this->is_debug) {
-                $message = "The page you requested, <b><u><i>{$this->name}</i></u></b>, could not be found 
+                $message = "<pre>$message</pre>";
+                $message .= "<hr><h1>Attention</h1>The page you requested, <b><u><i>{$this->name}</i></u></b>, could not be found 
                 under the site slug <b><u><i>{$this->site}</i></u></b> for domain <b><u><i>{$this->domain}</i></u></b>.
                 <br/><br/>
                 Would you like to create a page at this URL? <br/><br/>
@@ -420,7 +419,7 @@ class Library
                 <a href='/' class='btn btn-secondary'>Go Home</a>
                 <br/><br/>
                 If you believe this is an error, please contact the site administrator.
-                <br/><br/>
+                <br/><hr><br/>
                 
                 ";
             } else {
@@ -449,7 +448,7 @@ class Library
 </head>
 <body>
 
-<h1>$code</h1>
+<h1>$code <small><small> - That's an error :/</small></small></h1>
 <p>$message</p>
 <ul>
     <li>Domain: {$this->domain}</li>
