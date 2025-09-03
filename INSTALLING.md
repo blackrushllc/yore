@@ -14,7 +14,7 @@ Yore - A Framework for Applications
 ```
 
 ```
-Copyright (C) 2025, Blackrush LLC, All Rights Reserved
+Copyright (C) 2025, 𝕭𝖑𝖆𝖈k𝖗𝖚𝖘𝖍 † LLC, All Rights Reserved
 Created by Erik Olson, Tarpon Springs, Florida
 For more information, visit BlackrushDrive.com
 ```
@@ -22,10 +22,11 @@ For more information, visit BlackrushDrive.com
 # Installation Instructions for Yore Framework
 
 ## Prerequisites
-- PHP 7.0 or higher installed on your system.
+- PHP 8.0 or higher installed on your system (However it can run on PHP 7.x, but some features may not work).
 - Composer installed for dependency management.
 - A web server (e.g., Apache, Nginx) or PHP's built-in server for running the application.
 - A database server (e.g., MySQL, PostgreSQL) if your application requires one.
+
 
 
 ## Step 1: Download Yore Framework
@@ -36,8 +37,19 @@ Bash/Terminal:
 
 ## Step 2: Navigate to the Project Directory
 ```cd yore```
+You can also download the Yore framework as a ZIP file from the official repository and extract it to your desired location.
+If you downloaded the ZIP file, extract it to your desired location and navigate to that directory:
+```cd /path/to/yore```
+
 ## Step 3: Install Dependencies
 ```composer install```
+
+If you run into any errors with Composer, you may need to update Composer itself or install any missing PHP extensions. You can update Composer with:
+```composer self-update```
+
+A file named `composer.lock` should NOT be included in the repository, but if it somehow snuck in there you might want to delete it before running `composer install` to ensure that you get the latest versions of all dependencies.
+
+
 ## Step 4: Configure the Web Server Virtual Host
 - For Apache, create a new virtual host configuration file (e.g., `yore.conf`) in the Apache `sites-available` directory:
 ```apache
@@ -46,16 +58,47 @@ Bash/Terminal:
     DocumentRoot /path/to/yore/public
 
     <Directory /path/to/yore/public>
-        Options Indexes FollowSymLinks
-        AllowOverride All
-        Require all granted
+            Options Indexes FollowSymLinks MultiViews
+            AllowOverride All
+            Require all granted
+            RewriteEngine on
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteCond %{REQUEST_FILENAME} !-d
+            RewriteRule ^(.*)$ /index.php/$1 [NC,L]
     </Directory>
 
     ErrorLog ${APACHE_LOG_DIR}/yore_error.log
     CustomLog ${APACHE_LOG_DIR}/yore_access.log combined
 </VirtualHost>
 ```
-- Enable the site and rewrite module:
+
+It is important to note that the document root must be the `web` directory of the Yore framework, which contains the `index.php` file and other public assets.
+
+For example:
+
+```apache
+<VirtualHost *:80>
+        ServerName cityatworldsend.com
+        DocumentRoot /var/www/yore/web
+        
+        ServerAdmin webmaster@cityatworldsend.com
+        
+        <Directory /var/www/yore/web>
+            Options Indexes FollowSymLinks MultiViews
+            AllowOverride All
+            Require all granted
+            RewriteEngine on
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteCond %{REQUEST_FILENAME} !-d
+            RewriteRule ^(.*)$ /index.php/$1 [NC,L]
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+``` 
+- Enable the site and rewrite module - This is __required__ in order to use Yore's URL rewriting features. Without the rewrite modules and the Rewrite directives in the configuration file, Yore will not be able to handle requests properly:
 ```bash
 sudo a2ensite yore.conf
 sudo a2enmod rewrite
