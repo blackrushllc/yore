@@ -66,6 +66,10 @@ session_set_cookie_params([
     'httponly' => true,
     'samesite' => 'None', // Required for cross-site POSTs to include cookies
 ]);
+
+// set session timeout to 24 hours
+ini_set('session.gc_maxlifetime', 86400);
+ini_set('session.cookie_lifetime', 86400);
 session_start();
 
 # This thing does everything
@@ -126,13 +130,18 @@ echo $C->page;
 
 //exit('<img style="width:72px" src="/images/spronzer.png"><br/>Halo Welt');
 
-if(isset($_GET['debug'])) dd($C);
+if(isset($_GET['debug'])) {
+    $C->settings = "Not Shown";
+    $C->modules['Mail']->settings = "Not Shown";
+    $C->modules['Users']->settings = "Not Shown";
+    dd($C);
+}
 
 function dd($var) {
 
     echo "<textarea style='position:relative;width:100%;min-height:200px;color:yellow;background-color:black;font-size:80%;bottom:0;'>";
     if (gettype($var) == 'string') echo $var; else echo json_encode($var,JSON_PRETTY_PRINT);
-    echo "</textarea>";
+    echo "</textarea><br/><br/><br/><br/><br/><br/><br/><br/><br/>";
 
     exit;
 }

@@ -53,16 +53,15 @@ use App\Modules;
  */
 class Module extends Modules {
 
+
+    // Get these values from env.json in the current domain folder or from the global env.json in the root folder if not found in the domain folder
+
     protected $host = 'localhost';
-    protected $db   = 'yore';
-
-    protected $user = 'heidi';
-
-    private $pass = 'xxxxxxxx';
+    protected $database   = 'yore';
+    protected $username = 'username';
+    private $password = 'password';
     protected $port = "3306";
-
     protected $charset = 'utf8mb4';
-
     protected $pdo = false;
 
     public $row, $rows;
@@ -89,12 +88,23 @@ class Module extends Modules {
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
             \PDO::ATTR_EMULATE_PREPARES => false,
         ];
-        $dsn = "mysql:host=$this->host;dbname=$this->db;charset=$this->charset;port=$this->port";
+
+        // Get these values from env.json in the current domain folder or from the global env.json in the root folder if not found in the domain folder
+        $this->host = $this->controller->settings->database_module_host ?? $this->host;
+        $this->database   = $this->controller->settings->database_module_db ?? $this->database;
+        $this->port   = $this->controller->settings->database_module_port ?? $this->port;
+        $this->charset   = $this->controller->settings->database_module_charset ?? $this->charset;
+        $this->username = $this->controller->settings->database_module_username ?? $this->username;
+        $this->password = $this->controller->settings->database_module_password ?? $this->password;
+
+
+
+        $dsn = "mysql:host=$this->host;dbname=$this->database;charset=$this->charset;port=$this->port";
 
         // TODO: Only connect when database is first used
 
         try {
-            $this->pdo = new \PDO($dsn, $this->user, $this->pass, $options);
+            $this->pdo = new \PDO($dsn, $this->username, $this->password, $options);
         } catch (\PDOException $e) {
             //throw new \PDOException($e->getMessage(), (int)$e->getCode());
             $this->controller->abort(500, $e->getMessage());

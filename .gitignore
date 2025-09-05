@@ -4,3 +4,8 @@ temp/*
 composer.lock
 x
 xx
+env.json
+modules/FHHC
+modules/LCC
+modules/ARC
+

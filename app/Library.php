@@ -64,7 +64,7 @@ class Library
     /**
      * @var
      */
-    public $domain;
+    public $domain, $settings;
 
     public $params, $site, $name, $arg1, $arg2, $arg3, $api = false, $is_debug = false, $is_remote = false, $is_module=false;
 
@@ -152,6 +152,18 @@ class Library
             $this->is_debug = $this->modules_array->debug ?? false;
         }
 
+        $env_temp = '../pages/_domains/' . $this->domain . '/env.json';
+        if(file_exists($env_temp)) {
+            $this->settings = json_decode(file_get_contents($env_temp));
+        } else $this->settings = [];
+
+        if ($this->is_debug) {
+            error_reporting(E_ALL);
+            ini_set('display_errors', '1');
+        } else {
+            error_reporting(0);
+            ini_set('display_errors', '0');
+        }
         // Register all plugins by instantiating each
 
         $modulesDir = __DIR__ . '/../modules/';
