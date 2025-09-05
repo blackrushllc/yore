@@ -28,9 +28,35 @@ class BladeRenderer
         // Example: add a couple custom directives
         $compiler = $this->blade->compiler();
 
+        // @author($expr)
+        $compiler->directive('author', function ($expr) {
+            return "<?php echo 'Erik Olson'; ?>";
+        });
+
+        // @iif($expr, $trueValue, $falseValue) - THIS DOES NOT WORK:
+        // It seems that the Blade compiler does not support multiple parameters in custom directives directly.
+        // Uncaught ArgumentCountError:
+        // Too few arguments to function App\BladeRenderer::App\{closure}(),
+        // 1 passed and exactly 3 expected in /var/www/yore/app/BladeRenderer.php:42
+
+        $compiler->directive('iif', function ($expr) {
+            return "<?php echo $expr[0] ? $expr[1] : $expr[2]; ?>";
+         });
+
+        // This would need to be handled by the Fred class
+
+        // Do any actual Blade directives support multiple parameters inside of the parenthesis?
+
+
         // @datetime($ts)
         $compiler->directive('datetime', function ($expr) {
             return "<?php echo (new DateTime($expr))->format('Y-m-d H:i'); ?>";
+        });
+
+
+        // @date($ts)
+        $compiler->directive('date', function ($expr) {
+            return "<?php echo (new DateTime($expr))->format('Y-m-d'); ?>";
         });
 
         // @asset('css/app.css')

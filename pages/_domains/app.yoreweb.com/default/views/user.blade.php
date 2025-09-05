@@ -11,7 +11,7 @@
     //if ("AT session('role')" != 'user')  location.href='/module/users/login';
 
 </script>
-<h1>DEFAULT USER PAGE / {{ ucfirst($_SESSION['role']) }}</h1>
+<h1>Default User Blade / {{ ucfirst($_SESSION['role']) }}</h1>
 
 <hr>
 
@@ -21,3 +21,11 @@
     fictitious and for demonstration purposes only. You agree to hold harmless the developers of this application for
     any misuse or misunderstanding regarding the nature of the leads provided herein.
 </p>
+
+<pre>
+
+    @DATE('Y-m-d H:i:s') - This is the current date and time in the format YYYY-MM-DD HH:MM:SS
+
+
+
+</pre>
