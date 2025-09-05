@@ -37,6 +37,30 @@ class BladeRenderer
         $compiler->directive('asset', function ($expr) {
             return "<?php echo htmlspecialchars('/assets/' . trim($expr, \"'\\\"\"), ENT_QUOTES, 'UTF-8'); ?>";
         });
+
+        // Iterate through each loaded module and call its blade directives method if it exists
+
+        if ($this->controller && isset($this->controller->modules)) {
+            foreach ($this->controller->modules as $module) {
+                if (method_exists($module, 'blade_directives')) {
+                    $module->blade_directives($compiler);
+                }
+            }
+        }
+
+        // Iterate through each loaded module and generate blade directives from methods that start with "fred_"
+
+        foreach ($this->controller->modules as $module) {
+            $reflection = new \ReflectionClass($module);
+            foreach ($reflection->getMethods() as $method) {
+                if (strpos($method->name, 'fred_') === 0) {
+                    $directiveName = substr($method->name, strlen('blade_'));
+                    $compiler->directive($directiveName, function ($expr) use ($module, $method) {
+                        return "<?php echo \$this->controller->modules['{$module->myName}']->{$method->name}({$expr}); ?>";
+                    });
+                }
+            }
+        }
     }
 
     public function render(string $view, array $data = []): string
