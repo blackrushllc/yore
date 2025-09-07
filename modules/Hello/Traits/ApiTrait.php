@@ -14,7 +14,7 @@ namespace Modules\Hello\Traits;
  ░    ░   ░ ░    ░   ▒   ░        ░ ░░ ░   ░░   ░  ░░░ ░ ░ ░  ░  ░   ░  ░░ ░
  ░          ░  ░     ░  ░░ ░      ░  ░      ░        ░           ░   ░  ░  ░
       ░                  ░
-Copyright (C) 2024, Blackrush LLC, All Rights Reserved
+ Copyright (C) 2026, Blackrush LLC, All Rights Reserved
 Created by Erik Olson, Tarpon Springs, Florida
 For more information, visit BlackrushDrive.com
 
@@ -50,7 +50,7 @@ trait ApiTrait {
 
 
     // Create a function that can be called as an api endpoint. For example, this is /api/hello/test
-    // Notice that the slug "test" is lower case
+    // Notice that the slugs "debug" and "test" are lower case
     /**
      * @param $controller
      * @param $method

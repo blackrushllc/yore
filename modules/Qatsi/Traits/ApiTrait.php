@@ -1,5 +1,5 @@
 <?php
-namespace Modules\Admin\Traits;
+namespace Modules\Qatsi\Traits;
 
 /*
 
@@ -48,49 +48,29 @@ SOFTWARE.
  */
 trait ApiTrait {
 
+
+    // Create a function that can be called as an api endpoint. For example, this is /api/hello/test
+    // Notice that the slug "test" is lower case
     /**
+     * @param $controller
      * @param $method
-     * @return bool
+     * @return string
      */
-    public function api_login($method='GET') {
+    public function api_transact($controller, $method='GET') {
 
-        $username = $_REQUEST['username'] ?? false;
-        $password = $_REQUEST['password'] ?? false;
+        // Amount, Account ID, User ID, Type
 
-        if (!$username and !$password) {
-            $this->controller->abort(401, 'Invalid Login Credentials');
-        }
+        // FYI Whatever you return will JSON encoded
+        return "Hello World!";
 
-        if ($username == 'admin') {
+    }
 
-            if ($password == 'mermaid') {
+    public function api_lookup($controller, $method='GET') {
 
-                $_SESSION['username']   = $this->username   = $username;
-                $_SESSION['role']       = $this->role       = 'admin';
+        // Account ID, User ID, Type - Also return treasury balance, coins in circulation, and current coin value
 
-                return true;
-
-            }
-
-        }
-
-        if ($username == 'erik') {
-
-            if ($password == 'mermaid') {
-
-                $_SESSION['username']   = $this->username   = $username;
-                $_SESSION['role']       = $this->role       = 'user';
-
-                return true;
-
-            }
-
-        }
-
-        $_SESSION['username']   = $this->username   = null;
-        $_SESSION['role']       = $this->role       = null;
-
-        return false;
+        // FYI Whatever you return will JSON encoded
+        return "Hello World!";
 
     }
 }

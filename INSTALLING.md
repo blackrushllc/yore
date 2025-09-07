@@ -14,7 +14,7 @@ Yore - A Framework for Applications
 ```
 
 ```
-Copyright (C) 2025, 𝕭𝖑𝖆𝖈k𝖗𝖚𝖘𝖍 † LLC, All Rights Reserved
+Copyright (C) 2026, 𝕭𝖑𝖆𝖈k𝖗𝖚𝖘𝖍 † LLC, All Rights Reserved
 Created by Erik Olson, Tarpon Springs, Florida
 For more information, visit BlackrushDrive.com
 ```

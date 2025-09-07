@@ -1,5 +1,5 @@
 <?php
-namespace Modules\Admin\Traits;
+namespace Modules\Qatsi\Traits;
 
 /*
 
@@ -46,51 +46,24 @@ SOFTWARE.
 /**
  *
  */
-trait ApiTrait {
+trait YoreTrait  {
+
 
     /**
-     * @param $method
-     * @return bool
+     * @param $value
+     * @return void
      */
-    public function api_login($method='GET') {
-
-        $username = $_REQUEST['username'] ?? false;
-        $password = $_REQUEST['password'] ?? false;
-
-        if (!$username and !$password) {
-            $this->controller->abort(401, 'Invalid Login Credentials');
-        }
-
-        if ($username == 'admin') {
-
-            if ($password == 'mermaid') {
-
-                $_SESSION['username']   = $this->username   = $username;
-                $_SESSION['role']       = $this->role       = 'admin';
-
-                return true;
-
-            }
-
-        }
-
-        if ($username == 'erik') {
-
-            if ($password == 'mermaid') {
-
-                $_SESSION['username']   = $this->username   = $username;
-                $_SESSION['role']       = $this->role       = 'user';
-
-                return true;
-
-            }
-
-        }
-
-        $_SESSION['username']   = $this->username   = null;
-        $_SESSION['role']       = $this->role       = null;
-
-        return false;
-
+    function yore_module_post($value) {
+        // This method is called if a form is being posted, with whatever we wanted passed to us from the form in $value
+        // Right after this module has been yore_module_init()'d, this method is called if a form is being
+        // posted that referenced this module with @modulename_post('value') in the view, which would translate
+        // to "<input type='hidden' name='post_modulename_post' value='value'>", which is meant to trigger this
+        // method in this module when the form is posted.  We can do whatever we want to with that, or do nothing
     }
+
+    public function x_yore_navbar($where = 'top-right') {
+        return 'Hello!';
+    }
+
+
 }

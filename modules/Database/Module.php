@@ -14,7 +14,7 @@ namespace Modules\Database;
  ░    ░   ░ ░    ░   ▒   ░        ░ ░░ ░   ░░   ░  ░░░ ░ ░ ░  ░  ░   ░  ░░ ░
  ░          ░  ░     ░  ░░ ░      ░  ░      ░        ░           ░   ░  ░  ░
       ░                  ░
-Copyright (C) 2024, Blackrush LLC, All Rights Reserved
+ Copyright (C) 2026, Blackrush LLC, All Rights Reserved
 Created by Erik Olson, Tarpon Springs, Florida
 For more information, visit BlackrushDrive.com
 
@@ -90,12 +90,12 @@ class Module extends Modules {
         ];
 
         // Get these values from env.json in the current domain folder or from the global env.json in the root folder if not found in the domain folder
-        $this->host = $this->controller->settings->database_module_host ?? $this->host;
-        $this->database   = $this->controller->settings->database_module_db ?? $this->database;
-        $this->port   = $this->controller->settings->database_module_port ?? $this->port;
-        $this->charset   = $this->controller->settings->database_module_charset ?? $this->charset;
-        $this->username = $this->controller->settings->database_module_username ?? $this->username;
-        $this->password = $this->controller->settings->database_module_password ?? $this->password;
+        $this->host = $this->controller->settings['database_module_host'] ?? $this->host;
+        $this->database   = $this->controller->settings['database_module_db'] ?? $this->database;
+        $this->port   = $this->controller->settings['database_module_port'] ?? $this->port;
+        $this->charset   = $this->controller->settings['database_module_charset'] ?? $this->charset;
+        $this->username = $this->controller->settings['database_module_username'] ?? $this->username;
+        $this->password = $this->controller->settings['database_module_password'] ?? $this->password;
 
 
 

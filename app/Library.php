@@ -10,7 +10,7 @@
  ░    ░   ░ ░    ░   ▒   ░        ░ ░░ ░   ░░   ░  ░░░ ░ ░ ░  ░  ░   ░  ░░ ░
  ░          ░  ░     ░  ░░ ░      ░  ░      ░        ░           ░   ░  ░  ░
       ░                  ░
-Copyright (C) 2024, Blackrush LLC, All Rights Reserved
+ Copyright (C) 2026, Blackrush LLC, All Rights Reserved
 Created by Erik Olson, Tarpon Springs, Florida
 For more information, visit BlackrushDrive.com
 
@@ -154,7 +154,7 @@ class Library
 
         $env_temp = '../pages/_domains/' . $this->domain . '/env.json';
         if(file_exists($env_temp)) {
-            $this->settings = json_decode(file_get_contents($env_temp));
+            $this->settings = json_decode(file_get_contents($env_temp), true);
         } else $this->settings = [];
 
         if ($this->is_debug) {

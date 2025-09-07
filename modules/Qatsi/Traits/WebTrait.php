@@ -1,5 +1,5 @@
 <?php
-namespace Modules\Admin\Traits;
+namespace Modules\Qatsi\Traits;
 
 /*
 
@@ -46,51 +46,7 @@ SOFTWARE.
 /**
  *
  */
-trait ApiTrait {
+trait WebTrait {
 
-    /**
-     * @param $method
-     * @return bool
-     */
-    public function api_login($method='GET') {
 
-        $username = $_REQUEST['username'] ?? false;
-        $password = $_REQUEST['password'] ?? false;
-
-        if (!$username and !$password) {
-            $this->controller->abort(401, 'Invalid Login Credentials');
-        }
-
-        if ($username == 'admin') {
-
-            if ($password == 'mermaid') {
-
-                $_SESSION['username']   = $this->username   = $username;
-                $_SESSION['role']       = $this->role       = 'admin';
-
-                return true;
-
-            }
-
-        }
-
-        if ($username == 'erik') {
-
-            if ($password == 'mermaid') {
-
-                $_SESSION['username']   = $this->username   = $username;
-                $_SESSION['role']       = $this->role       = 'user';
-
-                return true;
-
-            }
-
-        }
-
-        $_SESSION['username']   = $this->username   = null;
-        $_SESSION['role']       = $this->role       = null;
-
-        return false;
-
-    }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Modules\Admin\Traits;
+namespace Modules\Qatsi;
 
 /*
 
@@ -43,54 +43,37 @@ SOFTWARE.
 
 */
 
+# This is the module code for the essential Yore library 🔥😂🤑 😠🤔🧵👈😍💥
+
+use App\Controller;
+use App\Modules;
+use Modules\Qatsi\Traits\ApiTrait;
+use Modules\Qatsi\Traits\FredTrait;
+use Modules\Qatsi\Traits\YoreTrait;
+use Modules\Qatsi\Traits\WebTrait;
+
 /**
  *
  */
-trait ApiTrait {
+class Module extends Modules {
+
+    use FredTrait;
+    use YoreTrait;
+    use ApiTrait;
+    use WebTrait;
 
     /**
-     * @param $method
-     * @return bool
+     *
      */
-    public function api_login($method='GET') {
-
-        $username = $_REQUEST['username'] ?? false;
-        $password = $_REQUEST['password'] ?? false;
-
-        if (!$username and !$password) {
-            $this->controller->abort(401, 'Invalid Login Credentials');
-        }
-
-        if ($username == 'admin') {
-
-            if ($password == 'mermaid') {
-
-                $_SESSION['username']   = $this->username   = $username;
-                $_SESSION['role']       = $this->role       = 'admin';
-
-                return true;
-
-            }
-
-        }
-
-        if ($username == 'erik') {
-
-            if ($password == 'mermaid') {
-
-                $_SESSION['username']   = $this->username   = $username;
-                $_SESSION['role']       = $this->role       = 'user';
-
-                return true;
-
-            }
-
-        }
-
-        $_SESSION['username']   = $this->username   = null;
-        $_SESSION['role']       = $this->role       = null;
-
-        return false;
-
+    public function __construct() {
+        // Constructor is optional
+        // Constructor in Parent does nothing right now, but all modules should call it anyway
+        $this->dir = __DIR__;
+        parent::__construct();
     }
+
+
+
+
+
 }

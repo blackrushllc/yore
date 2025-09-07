@@ -14,7 +14,7 @@ namespace Modules\Debug;
  ░    ░   ░ ░    ░   ▒   ░        ░ ░░ ░   ░░   ░  ░░░ ░ ░ ░  ░  ░   ░  ░░ ░
  ░          ░  ░     ░  ░░ ░      ░  ░      ░        ░           ░   ░  ░  ░
       ░                  ░
-Copyright (C) 2024, Blackrush LLC, All Rights Reserved
+ Copyright (C) 2026, Blackrush LLC, All Rights Reserved
 Created by Erik Olson, Tarpon Springs, Florida
 For more information, visit BlackrushDrive.com
 
@@ -82,6 +82,31 @@ class Module extends Modules {
         parent::__construct();
     }
 
+    // Create a function that can be called as an api endpoint. For example, this is /api/debug/create
+    // Notice that the slugs "debug" and "create" are lower case
+    /**
+     * @param $controller
+     * @param $method
+     * @return string
+     */
+    public function api_create($controller, $method='GET') {
+
+        // Notice that you have the $controller object here as a parameter, which basically gives you everything
+        //  including all the modules which is important because you will want modules to interoperate,
+        //  especially modules like Users and Database and Logging
+
+        // FYI Whatever you return will JSON encoded
+        //return "Hello World!";
+
+        exit("<h1>This part's not done yet :(</h1>
+            <img src='/images/yore1.png' style='width:300px;' alt='Yore - A web framework by Blackrush' />
+            <img src='/images/underconstruction.png' style='width:300px;' alt='Yore -Under Construction' />
+            
+            ");
+
+    }
+
+
     public function yore_navbar($where = 'top-right') {
         $controller = $this->controller;
         $domain = 'app.' . $controller->data->domain;
@@ -148,8 +173,8 @@ $debug = '';
     public function yore_output($controller, &$output) {
         if ($controller->is_debug) { // TODO: Use the Debug module for stuff like this
             $str_data = json_encode($controller->data, JSON_PRETTY_PRINT);
-            $domain = 'app.' . $controller->data->domain;
-            $domain = str_replace('app.app.', 'app.', $domain); // err
+            $domain = $controller->data->domain;
+            //$domain = str_replace('app.app.', 'app.', $domain); // err
             $site = $controller->data->site;
             $page = $controller->data->page;
             $view = $controller->data->view ?? 'null?';

@@ -1,5 +1,5 @@
 <?php
-namespace Modules\Admin\Traits;
+namespace Modules\Qatsi\Traits;
 
 /*
 
@@ -46,51 +46,25 @@ SOFTWARE.
 /**
  *
  */
-trait ApiTrait {
+trait FredTrait {
+
+    // Create a function that can be used in a view, like @HELLO('World'). Return the string "Hello World" or "Hello " + argument
 
     /**
-     * @param $method
-     * @return bool
+     * Implements @hello('world')
+     * @param $world (string|array)
+     * @return string
      */
-    public function api_login($method='GET') {
+    public function fred_hello($world) {
+        return "Hello $world";
+    }
 
-        $username = $_REQUEST['username'] ?? false;
-        $password = $_REQUEST['password'] ?? false;
-
-        if (!$username and !$password) {
-            $this->controller->abort(401, 'Invalid Login Credentials');
-        }
-
-        if ($username == 'admin') {
-
-            if ($password == 'mermaid') {
-
-                $_SESSION['username']   = $this->username   = $username;
-                $_SESSION['role']       = $this->role       = 'admin';
-
-                return true;
-
-            }
-
-        }
-
-        if ($username == 'erik') {
-
-            if ($password == 'mermaid') {
-
-                $_SESSION['username']   = $this->username   = $username;
-                $_SESSION['role']       = $this->role       = 'user';
-
-                return true;
-
-            }
-
-        }
-
-        $_SESSION['username']   = $this->username   = null;
-        $_SESSION['role']       = $this->role       = null;
-
-        return false;
-
+    /**
+     * Implements @data('element')
+     * @param $element (string|array)
+     * @return string
+     */
+    public function fred_data($element) {
+        return $this->controller->$element;
     }
 }
