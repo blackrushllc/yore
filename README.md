@@ -22,6 +22,8 @@ For more information, visit BlackrushDrive.com
 Please see the web/document.htm file for more information about this project and regular updates
 or visit https://yobasic.com/document.htm
 
+Visit https://app.yoreweb.com to see a working example application built with Yore (source code included in /modules/App and /pages/_domains/app.yoreweb.com)
+
 Please see INSTALLING.md for installation instructions and tips
 
 MIT License
@@ -53,7 +55,7 @@ SOFTWARE.
 
 Yore is a web framework for building applications and multi-site domain hosting.
 
-This application is still under development with 8 fundamental pillars in mind:
+This application is still under development with these fundamental pillars in mind:
 
 + An All-purpose lightweight MVC with JSON based configuration and a single controller class
 + Supports multiple sites and multiple domains in a single instance of the framework
@@ -62,7 +64,7 @@ dule
 + Tightly integrated Module Engine with numerous modules included
   + Create your own modules to extend the framework web and API routes and functionality
   + You can override module settings and views by creating a /modules folder in your site folder
-  + Includes modules for Database, USer, Logging, Debugging, Mail and Admin
+  + Includes modules for Database, User, Logging, Debugging, Mail and Admin
 + Versatile View Template Engine that ALSO includes Laravel Blade support:
   + Add HTML and Blade Template Directives just by creating methods in a module
   + Apply themes, permissions, constants, and other settings on a per-page, per-site and per-domain basis
@@ -70,10 +72,16 @@ dule
 + Debugging Integration with PhpStorm (also a PhpStorm Plugin is in the works)
 + Includes example modules and websites to get you started
 + Automatically generate complete sets of CRUD pages, forms and API routes for any database table
++ Automatically generate new pages by navigating to a non-existent page and creating it on the fly
 + Websites can be deployed anywhere you can store data like a table or S3 bucket:
   + See /web/export.php which stuffs the entire site/multi-sites into a single JSON file or MySQL table where it can be served rather than from disk. 
++ Includes AI Onboarding files for AI integration (See AI_ONBOARDING.md)
++ Includes a command line interface (CLI) for managing the framework and your applications
++ Includes a cron job interface for running scheduled tasks by creating a CRON method in any module
++ Includes a REPL (Read-Eval-Print Loop) for running PHP code interactively with your framework loaded
+  
 
-## Yore is not complete!  See ROADMAP.md for planned features and modules and a TODO list
+## Yore is not complete (but IS completely functional)!
 
 
 #Directory Structure
@@ -85,8 +93,8 @@ dule
     - /BladeRenderer - Laravel Blade Template Engine support (requires vendor packages)
     - /Command.php - This is the command line interface for the framework, which is the same as the web controller minus the view rendering
     - /Controller.php - This is the main controller for the whole framework, which handles all requests. You extend it with Modules which are automatically loaded.
-    - /Database.php - not used, empty class, for later use 
-    - /Conversions.php - not used, empty class, for later use
+    - /Database.php - not used, see modules/Database instead 
+    - /Conversions.php - not used, empty class, for later use with data conversions and site serialization to S3, Sql, etc
     - /Library.php - This is a parent class for both Command and Controller
     - /Modules.php - This is the parent class for all modules
   - /modules - All modules go in here and are automatically loaded
