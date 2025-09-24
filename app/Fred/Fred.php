@@ -155,7 +155,19 @@ class Fred
 
         if ((gettype($tail) == 'array') and (count($tail) == 1)) $tail = $tail[0];
 
+        // Upper Case Fred Directives are reserved for Fred's built-in functions, lower case are for module extensions
+        // and used for Blade directives that are not Fred-specific.
+
+        // Fred directives that do not conflict with Blade or module extensions are allowed to be mixed case, but should be avoided if possible.
+
         switch($head) {
+            case 'AUTHOR':
+                $command = 'Erik Olson for Blackrush, LLC';
+                break;
+            case 'MEMORY':
+            case 'SESSION':
+                $command = $_SESSION[$tail] ?? '';
+                break;
             case 'ASSET':
                 $command = '/themes/blackrush/' . $tail;
                 break;
@@ -174,9 +186,7 @@ class Fred
             case 'REQUEST':
                 $command = $_REQUEST[$tail] ?? '';
                 break;
-            case 'SESSION':
-                $command = $_SESSION[$tail] ?? '';
-                break;
+
             case 'EMPTY':
 
                 if (empty($tail[0]))
@@ -412,6 +422,10 @@ class Fred
     }
 
     function processMacroString($string) {
+
+        // WERE NOT DOING THIS RIGHT NOW
+
+
         // Match pattern that accounts for nested parentheses
         //
 

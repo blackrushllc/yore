@@ -140,7 +140,7 @@ if(isset($_GET['debug'])) {
 function dd($var) {
 
     echo "<textarea style='position:relative;width:100%;min-height:200px;color:yellow;background-color:black;font-size:80%;bottom:0;'>";
-    if (gettype($var) == 'string') echo $var; else echo json_encode($var,JSON_PRETTY_PRINT);
+    if (gettype($var) == 'string') echo $var; else var_dump($var);
     echo "</textarea><br/><br/><br/><br/><br/><br/><br/><br/><br/>";
 
     exit;

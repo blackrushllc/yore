@@ -262,40 +262,50 @@ class Controller extends Library {
             }
         }
 
-        if ($role_blade_view && file_exists($role_blade_view)) {
+        try {
+            if ($role_blade_view && file_exists($role_blade_view)) {
 
-           $role_blade_view = str_replace('../pages/_domains/' . $this->domain . '/' . $this->site . '/views/', '', $role_blade_view);
-           $role_blade_view = str_replace('.blade.php','', $role_blade_view);
+                $role_blade_view = str_replace('../pages/_domains/' . $this->domain . '/' . $this->site . '/views/', '', $role_blade_view);
+                $role_blade_view = str_replace('.blade.php', '', $role_blade_view);
 
-            // pages/_domains/app.luxecardclub.com/default/views/admin.blade.php
-            $this->html =  $this->render($role_blade_view); // This is our alternate blade view based on Role
-            $this->view_file = $role_blade_view;
+                // pages/_domains/app.luxecardclub.com/default/views/admin.blade.php
+                $this->html = $this->render($role_blade_view); // This is our alternate blade view based on Role
+                $this->view_file = $role_blade_view;
 
-        } elseif ($role_view && file_exists($role_view)) {
+            } elseif ($role_view && file_exists($role_view)) {
 
-            $this->html = file_get_contents($role_view); // This is our alternate html view based on Role
-            $this->view_file = $role_view;
+                $this->html = file_get_contents($role_view); // This is our alternate html view based on Role
+                $this->view_file = $role_view;
 
-        } elseif (file_exists($domain_blade_view)) {
+            } elseif (file_exists($domain_blade_view)) {
 
-            $this->html = $this->render($domain_blade_view); // This is our whole tire blade content
-            $this->view_file = $domain_blade_view;
+                $domain_blade_view = str_replace('../pages/_domains/' . $this->domain . '/' . $this->site . '/views/', '', $domain_blade_view);
+                $domain_blade_view = str_replace('.blade.php', '', $domain_blade_view);
 
-        } elseif (file_exists($domain_view)) {
+                $this->html = $this->render($domain_blade_view); // This is our whole tire blade content
+                $this->view_file = $domain_blade_view;
 
-            $this->html = file_get_contents($domain_view); // This is our whole tire htm content
-            $this->view_file = $domain_view;
+            } elseif (file_exists($domain_view)) {
 
-        } else {
-
-            if (file_exists($default_view)) {
-                $this->html = file_get_contents($default_view); // Just a template that displays @body()
-                $this->view_file = $default_view;
+                $this->html = file_get_contents($domain_view); // This is our whole tire htm content
+                $this->view_file = $domain_view;
 
             } else {
-                $this->abort(404, "View File Missing - $domain_view / $default_view / $role_view / $role_blade_view");
+
+                if (file_exists($default_view)) {
+                    $this->html = file_get_contents($default_view); // Just a template that displays @body()
+                    $this->view_file = $default_view;
+
+                } else {
+                    $this->abort(404, "View File Missing - $domain_view / $default_view / $role_view / $role_blade_view");
+                }
             }
+        } catch (\Exception $e) { dd($e); exit; // <<------------------------------ 👁👁
+            echo "ERROR!";
+            $this->abort(500);
         }
+
+        //dd([ $domain_blade_view, $default_view, $role_blade_view, $this->view_file, $this->html ]); // <<------------------------------ 👁👁
 
         if (empty($this->html)) $this->html="@body()";
 

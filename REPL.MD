@@ -1,3 +1,5 @@
+# THESE ARE JUST NOTES
+
 To replicate the functionality of Laravel's PHP command line tool in your own framework, you can follow these steps:
 
 ### 1. **Create a Command Line Script**

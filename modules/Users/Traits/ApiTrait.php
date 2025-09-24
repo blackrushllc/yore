@@ -238,7 +238,10 @@ trait ApiTrait {
         }
 
         if ( (isset($this->settings->auth_table)) && (isset($this->settings->auth_username_field)) && (isset($this->settings->auth_password_field))) {
-            $sql = sprintf("SELECT * FROM %s WHERE ? in (%s) and %s = ?",
+
+            // TODO: We might also want to allow for fields like disabled, status or deleted_at
+
+            $sql = sprintf("SELECT * FROM %s WHERE ? in (%s) and %s = ? LIMIT 1",
                 $this->settings->auth_table, $this->settings->auth_username_field, $this->settings->auth_password_field);
 
             //dd([$sql, $username, $password]);

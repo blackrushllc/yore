@@ -55,143 +55,110 @@ Yore is a web framework for building applications and multi-site domain hosting.
 
 This application is still under development with 8 fundamental pillars in mind:
 
-+ An All-purpose MVC
-+ Versatile View Template Engine
-+ Tightly integrated Module Engine
-+ Server-side Controller Programming Language
-+ Apps can be deployed anywhere you can store data
-+ Yore apps can be interconnected and remotely instantiate classes
-+ Yore has built-in version control and deployment
-+ The Yore frameworks are ported to numerous programming languages serving the same content
++ An All-purpose lightweight MVC with JSON based configuration and a single controller class
++ Supports multiple sites and multiple domains in a single instance of the framework
++ Supports serving multiple GIT branches simultaneously (see MULTI_BRANCH_VHOSTING.md) 
+dule
++ Tightly integrated Module Engine with numerous modules included
+  + Create your own modules to extend the framework web and API routes and functionality
+  + You can override module settings and views by creating a /modules folder in your site folder
+  + Includes modules for Database, USer, Logging, Debugging, Mail and Admin
++ Versatile View Template Engine that ALSO includes Laravel Blade support:
+  + Add HTML and Blade Template Directives just by creating methods in a module
+  + Apply themes, permissions, constants, and other settings on a per-page, per-site and per-domain basis
+  + Supports multiple themes and themes per domain
++ Debugging Integration with PhpStorm (also a PhpStorm Plugin is in the works)
++ Includes example modules and websites to get you started
++ Automatically generate complete sets of CRUD pages, forms and API routes for any database table
++ Websites can be deployed anywhere you can store data like a table or S3 bucket:
+  + See /web/export.php which stuffs the entire site/multi-sites into a single JSON file or MySQL table where it can be served rather than from disk. 
 
-## Yore is not complete!  Where fundamental pillars fail to provide features, I am currently coding into Custom Modules
+## Yore is not complete!  See ROADMAP.md for planned features and modules and a TODO list
 
-((MY LONG TERM GOAL FOR THIS FRAMEWORK IS NOT NOT HAVE TO RELY ON CUSTOM MODULES TO BUILD ALMOST ANY KIND OF APP))
-
-One of my goals with this project is to create a _prototype_ application framework which
-can render a complete web site without storing any of the custom MVC code locally.  The web server
-(or whatever environment is being used to render the applications) needs only to reference a named
-data source to render the entire app on any device.
-
-Additionally, I intend to have complete abstraction between the rendering server and the site contents,
-allowing for the rendering server to be platform independent and interpreting the content using layers
-written in Php, Go, Python, or even C++ as long as they know how to interpret, execute and render the
-MVC content.
-
-The MVC code, consisting of JSON data, HTML views, and a new script language system can be built manually using a directory structure and then compiled to a portable data source, or a web environment can be built to build the site data directly into the data source without the need for intermediate files.
-
-My current goal is to be able to create the local file structure and compile it to SQL, and then decompile the SQL back down to a local file structure for manual development.
-
-My ultimate goals include being to have:
-+ Agnostic data sourcing, not just SQL, the compiled site could, for instance be stored in:
-  + GitHub
-  + FTP/S3 etc
-  + Data storage services
-  + A Google Sheet (LOL but no really)
-  + Caching service or CDN
-  + etc
-+ A development environment which works off of the aforementioned data sources (I'm currently just manally editing HTML and JSON files in a local file system)
-+ The address of the data source would be all the instance of Yore needs to render the website
-+ Yore is extended by Modules, so as long as an instance has the modules that may be required by the site data then it will run
-+ A custom module would be needed if the developer cannot do something with the standard tools and modules 
-+ My long term goal is to be able to build instances of Yore for multiple platforms and in multiple base languages.  For instance, this Php version of the Yore framework could also be converted to Python, C# or Node but would still render the website just the same because the framework functionality would be the same, hence my calling this a "prototype".
-+ This way you could build a massive web application that may be using Php today but tommorrow you could have the same website running on a completely different platform with no changes.
-+ Also, a native app could be used to read and render an entire Yore website as a mobile app, allowing people to develop interesting mobile apps using their knowlege of Yore
-
-The data source should have a unique identifier like @clownworld or !vampires! although I don't much like the idea of having special characters in it, but it does need to be something in the URL that Yore will instantly recognize as a data source ID.
-
-Then, Yore fetches and caches the data source or just uses the cache if it hasn't changed and presents the website.
-
-This way, any Yore host or Yore mobile app can be called with the data source ID and present the website,
-
-The data source also provides a remote database if needed by the website.
-
-Idea: Any Yore site will also include a module which gives users the ability to generate their own Yore site using the same data source provider, encouraging both Yore site owners and data source providers to make this feature available and promote Yore in general
-
-
-
-
-https://yoreweb.com
 
 #Directory Structure
 
 - /
-  - api - (defuncty ..)
-  - app
-    - Controller.php - This is the main controller for the whole framework, you could extend this
-    - Database.php - 
-    - Library.php - This is a parent class for the controller with the stuff you shouldn't change
-    - Process.php - 
-  - modules
-    - Basic - A BASIC scripting interpreter for use by other modules
-    - Courses - The Yore LMS Framework Application Objects (FAO) (LMSFAO LOL)
-    - Database - DB Connectivity package for all Yore modules
-    - Debug - Website Debugging tools / Debug mode
-    - Games - 
-    - Hello - Example Module with lots of comments
-    - Logging - Yore site logging package
-    - Twilite - A Twilio extension of the BASIC module
-    - Users - Yore Users, Login, Register, Roles, Profiles, etc
-  - pages
-    - _domains - Sites under various domain names
-      - domain1.com
-        - api (defuncty ..)
-        - default
-          - views - FYI if a view is not provided, then just "@body()" is assumed
-            - page1.fred.php
-            - home.fred.php
-          - home.json
-          - page1.json
-        - site1
+  - /app
+    - /Crud - Automatic CRUD page and API generator
+    - /Fred - The Yore View Template Engine
+    - /BladeRenderer - Laravel Blade Template Engine support (requires vendor packages)
+    - /Command.php - This is the command line interface for the framework, which is the same as the web controller minus the view rendering
+    - /Controller.php - This is the main controller for the whole framework, which handles all requests. You extend it with Modules which are automatically loaded.
+    - /Database.php - not used, empty class, for later use 
+    - /Conversions.php - not used, empty class, for later use
+    - /Library.php - This is a parent class for both Command and Controller
+    - /Modules.php - This is the parent class for all modules
+  - /modules - All modules go in here and are automatically loaded
+    - /Admin - Work-in progress Multi-Site Admin module
+    - /App - Module for included sample application app.yoreweb.com
+    - /Database - DB Connectivity package for all Yore modules
+    - /Debug - Website Debugging tools / Debug mode, PhpStore integration
+    - /Hello - Example Module with lots of comments
+    - /Library - A collection of useful functions
+    - /Mail - Email module
+    - /Qatsi - A fully functional crytpo currency exchange and wallet system (Jk it doesn't do anything)
+    - /Users - Yore Users, Login, Register, Roles, Profiles, etc
+  - /pages
+    - /_domains - Sites under various domain names (note the underscore in this folder name)
+      - /app.yoreweb.com - example application domain
+        - env.json - this is where you can override environment settings for this specific domain
+        - modules.json - this is where you can enable/disable modules and override global module settings for this specific domain
+        - /default - this is the "/" home page of the site
+          - /views - FYI if a view is not provided, then just "@body()" is assumed
+            - admin.blade.php - example of a Blade template seen by the admin user
+            - homepage.html - example of an HTML template seen by user with no roles (i.e. not logged in)
+            - user.blade.php - example of a Blade template seen by user with role "user"
+            - (xxx.blade.php) - example of a Blade template seen by user with role "xxx"
+            - (yyy.html) - example of an HTML template seen by user with role "yyy"
+          - home.json - this is the config fle for the "/" home page of the site
+          - page1.json - this would be the config file for "/page1", with a view file named "page1.blade.php" or "page1.html"
+          - page2.json - this would be the config file for "/page2", with a view file named "page2.blade.php" or "page2.html"
+        - /emails - this is the "/emails" slug/folder of the site
           - views
-            - home.fred.php
-            - page1.fred.php
-            - page2.fred.php
-            - etc.fred.php
-          - home.json
-          - page1.json
-          - page2.json
-          - etc.json
-        - site2
-          - views
-            - home.fred.php
-            - page1.fred.php
-            - page2.fred.php
-            - etc.fred.php
-          - home.json
-          - page1.json
-          - page2.json
-          - etc.json
-        - site3 etc... etc...
-      - domain2.com etc... etc...
-      - domain3.com etc... etc...
-    - default - DEFAULT WEBSITE if no matching "_domains" entry
-      - views
-        - home.fred.php
-      - home.json
-    - site1 (i.e. /site1 uses home)
-      - views - FYI if a view is not provided, then just "@body()" is assumed
-        - home.fred.php (i.e. /site1 uses home)
-        - page1.fred.php
-        - page2.fred.php
-      - home.json (i.e. /site1 uses home)
-      - page1.json (i.e. /site1/page1)
-      - page2.json (i.e. /site1/page2)
-    - site2
-      - views
-        - home.fred.php
-        - page1.fred.php
-        - page2.fred.php
-      - home.json
-      - page1.json
-      - page2.json
-    - site3 etc... etc...
-  - tests
+            - add.html - this is the view for "/emails/add"
+            - delete.html - this is the view for "/emails/delete"
+            - deleted.html - this is the view for "/emails/deleted"
+            - edit.html - this is the view for "/emails/edit"
+            - index.html - this is the view for "/emails/index"
+          - add.json - this is the config file for "/emails/add"
+          - delete.json - this is the config file for "/emails/delete"
+          - deleted.json - this is the config file for "/emails/deleted"
+          - edit.json - this is the config file for "/emails/edit"
+          - index.json - this is the config file for "/emails/index"
+        - /modules - this is where you can override module settings and views for this specific domain
+          - /Mail
+            - settings.json - this is where you can override Mail module settings for this specific domain
+            - views
+              - email_template.html - this is an example of overriding a module view for this specific domain
+              - another_template.html - this is another example of overriding a module view for this specific domain
+              - etc...
+            - /Users
+              - settings.json - this is where you can override Users module settings for this specific domain
+              - /views
+                - login.html - this is an example of overriding a module view for this specific domain
+                - register.html - this is another example of overriding a module view for this specific domain
+                - profile.html - this is another example of overriding a module view for this specific domain
+                - etc...
+        - /register... (this is the "/register" slug/folder of the site)
+        - /reports... (etc .. more of the same)
+        - /settings...
+        - /users...
+      - blackrush.us - another host etc... etc...
+      - blackrushdrive.com -  etc... etc...
+      - example.com -  etc... etc...
+      - local -  DEFAULT WEBSITE if no matching "_domains" entry OR if using localhost OR !!!command line!!! OR CRON!!
+        - /modules - this is where you can override module settings and views f no matching "_domains" entry OR if using localhost OR !!!command line!!! OR CRON!!
+          - /Mail
+            - settings.json - override Mail module settings if no matching "_domains" entry OR if using localhost OR !!!command line!!! OR CRON!!
+    - admin - (this was supposed to be an admin module but it is not used, see modules/Admin instead)
+    - default - (this was supposed to be the default site but it is not used, see _domains/local instead)
+  - storage/cache/views - used by the Laravel Blade feature
   - vendor - composer packages get installed here (not in repo)
   - web
-    - css
-    - images
-    - js
+    - css - framework level css
+    - images - framework level images
+    - js - framework level javascript
     - themes
       - domain1
         - css
@@ -202,6 +169,53 @@ https://yoreweb.com
       - somecooltheme etc..
       - default etc..
     - index.php - main entry point for everything everything
+
+
+# Some other files of note:
+
+Useful Unicode Icons!.txt - a list of unicode icons you can use in your pages
+
+INSTALLING.MD - installation instructions
+
+REPL.MD - Notes on the command line interface
+
+ROADMAP.MD - planned features and TODO list (todo)
+
+MULTI_BRANCH_VHOSTING.MD - notes on how to set up multiple git branches to be served simultaneously
+
+LICENSE - MIT License (todo)
+
+COLLAB.md - how to contribute to this project
+
+# Important files in the /web folder:
+
+  /web/cron/php - This executes all of the "Cron" methods in all modules for the current site
+
+  /web/yore - A command line utility for managing Yore
+
+  /web/cli.php - command line entry point
+
+## Additional utilities and things in the /web folder:
+
+/web/export.php - exports the entire site or all sites to a single JSON file or MySQL table
+
+/web/document.htm - documentation file
+
+/web/jsonviewer.php - view any JSON file in a readable format
+
+/web/spam.php - You can send emails with this
+
+/web/webhook.php - You can receive webhooks with this
+
+/web/import.php - Something I was using to import webhook data
+
+/web/enc.php - A simple encryption/decryption utility for putting sensitive data in JSON files
+
+
+# Installation
+See INSTALLING.md for detailed installation instructions
+
+# Web Server Configuration
 
 
 

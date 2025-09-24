@@ -419,6 +419,11 @@ class Library
 
         }
 
+        if ($code == 401) {
+            // Redirect to root page with message
+            $this->home("You must be logged in to view that page.");
+        }
+
         if ($code == 404) {
             if ($this->is_debug) {
                 $message = "<pre>$message</pre>";
@@ -579,5 +584,49 @@ EOT;
     function encodeAll($str) {
         $hex = unpack('H*', $str);
         return preg_replace('~..~', '%$0', strtoupper($hex[1]));
+    }
+
+    function cleanTextFile($filename)
+    {
+//        // If the file extension is pgp or gpg then call a function to decrypt it
+//        if (strpos($filename, '.pgp') !== false || strpos($filename, '.gpg') !== false) {
+//            echo ("\nDecrypting $filename...\n");
+//            // If a method exists in the current class named "decryptFile" then call it
+//            if (method_exists($this, 'decryptFile')) {
+//                $filename = $this->decryptFile($filename);
+//            } else {
+//                throw new \Exception("File is encrypted but no decryptFile method exists in class " . get_class($this));
+//            }
+//
+//        }
+
+        if (!file_exists($filename) || !is_readable($filename)) {
+            throw new Exception("File does not exist or is not readable: $filename");
+        }
+
+        $contents = file_get_contents($filename);
+        if ($contents === false) {
+            throw new Exception("Failed to read the file: $filename");
+        }
+
+        // Remove high ASCII chars (>127) and control chars except CR (13) and LF (10)
+        $cleaned = '';
+        $length = strlen($contents);
+
+        for ($i = 0; $i < $length; $i++) {
+            $ascii = ord($contents[$i]);
+            if (
+                ($ascii === 10 || $ascii === 13) || // Allow LF and CR
+                ($ascii >= 32 && $ascii <= 127)     // Allow standard printable ASCII
+            ) {
+                $cleaned .= $contents[$i];
+            }
+        }
+
+        if (file_put_contents($filename, $cleaned) === false) {
+            throw new Exception("Failed to write cleaned content to the file: $filename");
+        }
+
+        return $filename;
     }
 }

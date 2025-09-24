@@ -22,7 +22,7 @@ For more information, visit BlackrushDrive.com
 # Installation Instructions for Yore Framework
 
 ## Prerequisites
-- PHP 8.0 or higher installed on your system (However it can run on PHP 7.x, but some features may not work).
+- PHP 8.0 or higher installed on your system (However it can run on PHP 7.x, but some features may not work, specifically blade support)
 - Composer installed for dependency management.
 - A web server (e.g., Apache, Nginx) or PHP's built-in server for running the application.
 - A database server (e.g., MySQL, PostgreSQL) if your application requires one.
@@ -41,7 +41,7 @@ You can also download the Yore framework as a ZIP file from the official reposit
 If you downloaded the ZIP file, extract it to your desired location and navigate to that directory:
 ```cd /path/to/yore```
 
-## Step 3: Install Dependencies
+## Step 3: Install Dependencies*
 ```composer install```
 
 If you run into any errors with Composer, you may need to update Composer itself or install any missing PHP extensions. You can update Composer with:
@@ -49,6 +49,7 @@ If you run into any errors with Composer, you may need to update Composer itself
 
 A file named `composer.lock` should NOT be included in the repository, but if it somehow snuck in there you might want to delete it before running `composer install` to ensure that you get the latest versions of all dependencies.
 
+(*) Note: Yore CAN run without Composer, but it is highly recommended to use Composer for managing dependencies and autoloading classes. Support for Blade files requires Composer.
 
 ## Step 4: Configure the Web Server Virtual Host
 - For Apache, create a new virtual host configuration file (e.g., `yore.conf`) in the Apache `sites-available` directory:
