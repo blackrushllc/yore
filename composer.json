@@ -63,7 +63,7 @@
             "php -dxdebug.mode=debug -dxdebug.start_with_request=yes -dxdebug.client_port=9003 -dxdebug.client_host=localhost -S localhost:8000 -t web"
         ],
         "serve:profile": [
-            "php -dxdebug.mode=profile -dxdebug.start_with_request=yes -dxdebug.output_dir=./storage/xdebug -S localhost:8000 -t web"
+            "mkdir -p ./storage/xdebug && php -dxdebug.mode=profile -dxdebug.start_with_request=yes -dxdebug.output_dir=./storage/xdebug -S localhost:8000 -t web"
         ],
         "serve:coverage": [
             "php -dxdebug.mode=coverage -S localhost:8000 -t web"
