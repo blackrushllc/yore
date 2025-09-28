@@ -53,6 +53,7 @@ namespace App;
 use App\BladeRenderer;
 use App\Fred\Fred;
 use App\Fred\MarkdownExtra;
+use App\TenantResolver;
 use Illuminate\Container\Container;
 
 /**
@@ -139,7 +140,7 @@ class Library
         }
 
 
-        $this->domain = $_SERVER['SERVER_NAME'] ?? 'local';
+        $this->domain = TenantResolver::current();
         $this->site = !empty($this->params[0] ?? null) ? $this->params[0] : 'default';
         $this->name = !empty($this->params[1] ?? null) ? $this->params[1] : 'home';
         $this->arg1 = $this->params[2] ?? false;
