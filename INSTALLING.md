@@ -49,6 +49,18 @@ If you run into any errors with Composer, you may need to update Composer itself
 
 A file named `composer.lock` should NOT be included in the repository, but if it somehow snuck in there you might want to delete it before running `composer install` to ensure that you get the latest versions of all dependencies.
 
+## Quick Start for Local Development
+
+For simple local development, you can use PHP's built-in server instead of configuring Apache or Nginx:
+
+```bash
+composer serve
+```
+
+This command will start a local development server on `http://localhost:8000` using the `web` directory as the document root. This is the easiest way to get Yore running locally for development purposes.
+
+Note: The built-in PHP server is only recommended for development. For production deployments, use a proper web server like Apache or Nginx as described in the following steps.
+
 (*) Note: Yore CAN run without Composer, but it is highly recommended to use Composer for managing dependencies and autoloading classes. Support for Blade files requires Composer.
 
 ## Step 4: Configure the Web Server Virtual Host
@@ -192,6 +204,3 @@ See the sample applications for lots of examples of how to use the modules and c
 - Ensure that your SSL certificates are correctly configured.
 - If you are using a database, ensure that the database server is running and that the connection details in your configuration file are correct.
 - If you are using a mail server, ensure that it is configured correctly and that the web server can connect to it.
-
-
-
