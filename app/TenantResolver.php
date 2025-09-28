@@ -201,7 +201,7 @@ class TenantResolver
     {
         if (php_sapi_name() === 'cli') {
             // Check for CLI argument --tenant=example.com
-            global $argv;
+            $argv = $_SERVER['argv'] ?? [];
             if ($argv) {
                 foreach ($argv as $arg) {
                     if (strpos($arg, '--tenant=') === 0) {

@@ -118,7 +118,7 @@ TenantResolver::setDefault('my-default-tenant');
 
 ```php
 // High priority resolver (runs first)
-TenantResolver::addResolver(function() {
+TenantResolver::addResolver(function() use ($database) {
     // Check database for tenant mapping
     return $database->getTenantByHost($_SERVER['HTTP_HOST']);
 }, 300);
@@ -198,8 +198,7 @@ TenantResolver::addResolver(function() {
 
 ### Database-Driven Tenants
 ```php
-TenantResolver::addResolver(function() {
-    global $database;
+TenantResolver::addResolver(function() use ($database) {
     return $database->getTenantForHost($_SERVER['HTTP_HOST']);
 });
 ```
