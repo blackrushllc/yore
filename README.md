@@ -24,7 +24,25 @@ or visit https://yobasic.com/document.htm
 
 Visit https://app.yoreweb.com to see a working example application built with Yore (source code included in /modules/App and /pages/_domains/app.yoreweb.com)
 
-Please see INSTALLING.md for installation instructions and tips
+## Quick Start
+
+To quickly get started with Yore for local development:
+
+1. Clone the repository and install dependencies:
+   ```bash
+   git clone https://github.com/blackrushllc/yore
+   cd yore
+   composer install
+   ```
+
+2. Start the local development server:
+   ```bash
+   composer serve
+   ```
+
+3. Open your browser to `http://localhost:8000`
+
+For detailed installation instructions and production setup, see INSTALLING.md.
 
 MIT License
 
@@ -271,4 +289,3 @@ Include /etc/letsencrypt/options-ssl-apache.conf
 
 
 ```
-
