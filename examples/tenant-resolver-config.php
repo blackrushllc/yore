@@ -138,13 +138,12 @@ TenantResolver::addResolver(function() {
 /**
  * Helper function: Check if user has access to tenant
  */
-function userHasAccessToTenant($userId, $tenantId): bool
+function userHasAccessToTenant($userId, $tenantId, $database = null): bool
 {
     // Implement your authorization logic here
     // This could check a database, LDAP, or other auth system
 
     // Example implementation:
-    global $database;
     if (!$database) return false;
 
     $access = $database->query(
@@ -158,9 +157,8 @@ function userHasAccessToTenant($userId, $tenantId): bool
 /**
  * Helper function: Get all tenants user has access to
  */
-function getUserTenants($userId): array
+function getUserTenants($userId, $database = null): array
 {
-    global $database;
     if (!$database) return [];
 
     return $database->query(
@@ -174,11 +172,11 @@ function getUserTenants($userId): array
 /**
  * Helper function: Create tenant switcher UI
  */
-function renderTenantSwitcher(): string
+function renderTenantSwitcher($database = null): string
 {
     if (!isset($_SESSION['user_id'])) return '';
 
-    $userTenants = getUserTenants($_SESSION['user_id']);
+    $userTenants = getUserTenants($_SESSION['user_id'], $database);
     $currentTenant = TenantResolver::current();
 
     if (count($userTenants) <= 1) return '';
