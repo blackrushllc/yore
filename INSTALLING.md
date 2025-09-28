@@ -59,6 +59,23 @@ composer serve
 
 This command will start a local development server on `http://localhost:8000` using the `web` directory as the document root. This is the easiest way to get Yore running locally for development purposes.
 
+### Debugging Support
+
+For debugging and profiling during development, Yore includes pre-configured Xdebug commands:
+
+```bash
+# Development server with Xdebug debugging enabled
+composer serve:debug
+
+# Development server with profiling enabled
+composer serve:profile
+
+# Development server with code coverage enabled
+composer serve:coverage
+```
+
+For complete Xdebug setup instructions, IDE configuration, remote debugging, and troubleshooting, see **[XDEBUG.md](XDEBUG.md)**.
+
 Note: The built-in PHP server is only recommended for development. For production deployments, use a proper web server like Apache or Nginx as described in the following steps.
 
 (*) Note: Yore CAN run without Composer, but it is highly recommended to use Composer for managing dependencies and autoloading classes. Support for Blade files requires Composer.
