@@ -18,9 +18,8 @@ TenantResolver::setDefault('local');
 
 // Example 1: Database-driven tenant resolution
 // This resolver checks a database table for tenant mappings
-TenantResolver::addResolver(function() {
+TenantResolver::addResolver(function() use ($database) {
     // Only run this if we have database connectivity
-    global $database;
     if (!$database) return null;
 
     $host = $_SERVER['HTTP_HOST'] ?? '';
