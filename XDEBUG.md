@@ -278,7 +278,7 @@ For debugging across networks:
 ip addr show | grep inet
 
 # Set Xdebug client host to your machine's IP
-composer serve:debug -- -dxdebug.client_host=192.168.1.100
+XDEBUG_CONFIG="client_host=192.168.1.100" composer serve:debug
 ```
 
 ## Profiling
