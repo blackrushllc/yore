@@ -430,7 +430,7 @@ Enable debug mode to see database operations:
 // In your domain's env.json
 {
   "debug": true,
-  "database_module_host": "localhost"
+  "database_module_host": "localhost",
   // ... other settings
 }
 ```
