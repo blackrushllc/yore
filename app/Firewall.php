@@ -193,7 +193,7 @@ class Firewall
                 if ($config !== null) {
                     $stats['files_cached']++;
                 }
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $stats['errors'][] = "Error caching {$file}: " . $e->getMessage();
             }
         }
