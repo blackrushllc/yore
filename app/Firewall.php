@@ -425,7 +425,9 @@ class Firewall
 
         try {
             // Define security constant before including cache file
-            define('FIREWALL_CACHE_ACCESS', true);
+            if (!defined('FIREWALL_CACHE_ACCESS')) {
+                define('FIREWALL_CACHE_ACCESS', true);
+            }
             $cached = include $cacheFile;
             return is_array($cached) ? $cached : null;
         } catch (Exception $e) {
