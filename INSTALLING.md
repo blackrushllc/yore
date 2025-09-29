@@ -27,8 +27,6 @@ For more information, visit BlackrushDrive.com
 - A web server (e.g., Apache, Nginx) or PHP's built-in server for running the application.
 - A database server (e.g., MySQL, PostgreSQL) if your application requires one.
 
-
-
 ## Step 1: Download Yore Framework
 (You can download the Yore framework from its official repository or website.)
 
@@ -58,6 +56,7 @@ composer serve
 ```
 
 This command will start a local development server on `http://localhost:8000` using the `web` directory as the document root. This is the easiest way to get Yore running locally for development purposes.
+Skip to Step 7 if you're just working locally for now.
 
 ### Debugging Support
 
@@ -176,12 +175,8 @@ sudo chown -R www-data:www-data /path/to/yore/
 sudo chmod -R 775 /path/to/yore/
 ```
 
-
-
 ## Step 7: Run Database Migrations for sample applications
-```bash ./yore cli migrate```
-
-
+```bash /path/to/yore/web/yore cli migrate```
 
 ## Optional: Configure Default Modules
 (TODO)
@@ -194,7 +189,6 @@ sudo chmod -R 775 /path/to/yore/
 * Users
 
 ## Step 8: Access the Application
-
 - Open your web browser and navigate to `http://yourdomain.com` or `http://localhost` if you're running it locally.
 - You should see the Yore framework welcome page or your application's homepage.
 - If your application has not been developed, you will be prompted with a wizard to create some example application pages.
@@ -208,9 +202,7 @@ You can also create a "modules" folder in the root of your domain folder, with s
 
 See the sample applications for lots of examples of how to use the modules and create your own applications.
  
-## Troubleshooting 
- 
-
+## Troubleshooting
 - If you encounter any issues, check the web server error logs for troubleshooting.
 - For Apache, check `/var/log/apache2/yore_error.log`.
 - For Nginx, check `/var/log/nginx/yore_error.log`.
