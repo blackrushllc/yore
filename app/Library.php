@@ -228,7 +228,7 @@ class Library
                 // Check if the path is a directory
                 if (is_dir($subdirPath)) {
 
-                    $filePath = $subdirPath . "/$SPACE_NAME.php"; // Literally "/modules/Hello/Module.php" and someday "/modules/Hello/Api.php" 👁��
+                    $filePath = $subdirPath . "/$SPACE_NAME.php"; // Literally "/modules/Hello/Module.php" and someday "/modules/Hello/Api.php"
 
                     // Check if the "Module.php" file exists in the subdirectory, if not then leave it alone
                     // TODO: Maybe support a Module-dev.php version for debug mode, etc.. Module-noauth, Module-admin, 😊
