@@ -3,17 +3,21 @@
 
 # yore - lightweight dispatcher script
 
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CLI_PHP="$SCRIPT_DIR/cli.php"
+
 # Check if first argument is "cli"
 if [[ "$1" == "cli" ]]; then
     shift # remove "cli"
-    # if "cli.php" is in the current directory then..
-    if [[ ! -f "cli.php" ]]; then
-        echo "Error: cli.php not found in the current directory."
+    # Check if cli.php exists in the same directory as this script
+    if [[ ! -f "$CLI_PHP" ]]; then
+        echo "Error: cli.php not found at $CLI_PHP"
         exit 1
     fi
 
     # Run php cli.php with all remaining args
-    php cli.php "$@"
+    php "$CLI_PHP" "$@"
 else
     # Switch structure based on first argument
     case "$1" in
