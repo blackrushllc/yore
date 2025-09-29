@@ -127,7 +127,7 @@ php web/cli.php migrate
 CREATE DATABASE yore_prod CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- Create production user with limited privileges
-CREATE USER 'yore_prod'@'%' IDENTIFIED BY 'VERY_SECURE_PASSWORD';
+CREATE USER 'yore_prod'@'%' IDENTIFIED BY 'your-actual-password-here';
 GRANT SELECT, INSERT, UPDATE, DELETE ON yore_prod.* TO 'yore_prod'@'%';
 FLUSH PRIVILEGES;
 ```
@@ -141,7 +141,7 @@ Create `pages/_domains/yourdomain.com/env.json`:
   "database_module_host": "your-db-server.com",
   "database_module_db": "yore_prod",
   "database_module_username": "yore_prod",
-  "database_module_password": "VERY_SECURE_PASSWORD",
+  "database_module_password": "your-actual-password-here",
   "database_module_port": "3306",
   "database_module_charset": "utf8mb4"
 }
@@ -156,7 +156,7 @@ For enhanced security, use environment variables:
 export YORE_DB_HOST="your-db-server.com"
 export YORE_DB_NAME="yore_prod"
 export YORE_DB_USER="yore_prod"
-export YORE_DB_PASS="VERY_SECURE_PASSWORD"
+export YORE_DB_PASS="your-actual-password-here"
 ```
 
 Then in your `env.json`:
