@@ -61,7 +61,6 @@ use Illuminate\Container\Container;
  */
 class Library
 {
-
     /**
      * @var
      */
@@ -80,6 +79,38 @@ class Library
     public $flash;
 
     public $users=null, $database=null, $logging=null, $mail=null; // These are shortcuts from the $modules array for convenience
+
+
+##     ## ######## #### ##       #### ######## ##    ##
+##     ##    ##     ##  ##        ##     ##     ##  ##
+##     ##    ##     ##  ##        ##     ##      ####
+##     ##    ##     ##  ##        ##     ##       ##
+##     ##    ##     ##  ##        ##     ##       ##
+##     ##    ##     ##  ##        ##     ##       ##
+ #######     ##    #### ######## ####    ##       ##
+
+    /**
+     * Check if the application is running in a development environment.
+     * Best practice is to set an 'APP_ENV' environment variable to 'development'.
+     * @return bool
+     */
+    public static function isDevelopmentMode(): bool
+    {
+        // 1. Check Environment Variable (Best Practice)
+        $appEnv = getenv('APP_ENV');
+        if ($appEnv === 'development') {
+            return true;
+        }
+
+        // 2. Fallback to Hostname for simple local setups
+        $host = $_SERVER['HTTP_HOST'] ?? '';
+        if (str_starts_with($host, 'localhost') || str_ends_with($host, '.local')) {
+            return true;
+        }
+
+        return false;
+    }
+
 
 
 #### ##    ## #### ########
@@ -147,6 +178,9 @@ class Library
         $this->arg2 = $this->params[3] ?? false;
         $this->arg3 = $this->params[4] ?? false;
 
+        // Use the centralized development mode detection
+        $this->is_debug = self::isDevelopmentMode();
+
         $modules_temp = '../pages/_domains/' . $this->domain . '/modules.json';
         if(file_exists($modules_temp)) {
             $this->modules_array = json_decode(file_get_contents($modules_temp));
@@ -194,7 +228,7 @@ class Library
                 // Check if the path is a directory
                 if (is_dir($subdirPath)) {
 
-                    $filePath = $subdirPath . "/$SPACE_NAME.php"; // Literally "/modules/Hello/Module.php" and someday "/modules/Hello/Api.php" 👁👁
+                    $filePath = $subdirPath . "/$SPACE_NAME.php"; // Literally "/modules/Hello/Module.php" and someday "/modules/Hello/Api.php" 👁��
 
                     // Check if the "Module.php" file exists in the subdirectory, if not then leave it alone
                     // TODO: Maybe support a Module-dev.php version for debug mode, etc.. Module-noauth, Module-admin, 😊
@@ -631,3 +665,4 @@ EOT;
         return $filename;
     }
 }
+

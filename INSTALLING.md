@@ -75,6 +75,58 @@ composer serve:coverage
 
 For complete Xdebug setup instructions, IDE configuration, remote debugging, and troubleshooting, see **[XDEBUG.md](XDEBUG.md)**.
 
+### Development Mode Configuration
+
+Yore includes a built-in development mode detection system that automatically enables debugging features, error reporting, and development-specific behaviors. The `isDevelopmentMode()` method in the `Library` class determines whether the application is running in development mode using the following criteria:
+
+#### Method 1: Environment Variable (Recommended)
+Set the `APP_ENV` environment variable to `development`:
+
+```bash
+# In your shell or .env file
+export APP_ENV=development
+```
+
+#### Method 2: Hostname Detection (Fallback)
+If no environment variable is set, Yore will automatically detect development mode based on the hostname:
+- `localhost` (any port)
+- Any domain ending in `.local`
+
+Examples that trigger development mode:
+- `http://localhost:8000`
+- `http://localhost:3000`
+- `http://myapp.local`
+- `http://dev.local`
+
+#### What Development Mode Enables
+
+When development mode is active, Yore automatically:
+- Enables full error reporting (`error_reporting(E_ALL)`)
+- Shows detailed error messages (`ini_set('display_errors', '1')`)
+- Provides enhanced debugging information in error pages
+- Enables development-specific features in modules
+
+#### Overriding Development Mode
+
+You can override the automatic detection by setting the `debug` flag in your domain's `modules.json` file:
+
+```json
+{
+  "debug": true,
+  "exclude": []
+}
+```
+
+This will force development mode regardless of environment variables or hostname.
+
+#### Production Considerations
+
+For production deployments:
+1. **Never** set `APP_ENV=development` in production
+2. **Never** use `.local` domains in production
+3. Ensure your production hostname doesn't match development patterns
+4. Consider explicitly setting `APP_ENV=production` in production environments
+
 Note: The built-in PHP server is only recommended for development. For production deployments, use a proper web server like Apache or Nginx as described in the following steps.
 
 (*) Note: Yore CAN run without Composer, but it is highly recommended to use Composer for managing dependencies and autoloading classes. Support for Blade files requires Composer.

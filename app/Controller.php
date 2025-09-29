@@ -51,6 +51,9 @@ SOFTWARE.
 
 namespace App;
 
+use App\Firewall;
+use App\FirewallResult;
+
 class Controller extends Library {
 
     /**
@@ -63,6 +66,8 @@ class Controller extends Library {
     public $header, $footer, $html, $js = [], $css = [], $output;
 
     public $env;
+
+    public $firewallResult;
 
     // public vars in parent class $params, $site, $name, $arg1, $arg2, $arg3, $is_debug = true, $is_remote = false, $is_module=false;
 
@@ -98,6 +103,12 @@ class Controller extends Library {
                 $this->abort();
             }
 
+            // Check firewall rules for this page
+            if (!$this->checkFirewall()) {
+                $this->handleFirewallBlocked();
+                return;
+            }
+
             // Get the view for this page with #Vars (any defined Php variables) and Markdown translated
             if (!$this->process()) {
                 $this->abort();
@@ -120,6 +131,12 @@ class Controller extends Library {
             if (!$this->page()) {
                 $this->abort();
             }
+
+            // Check firewall rules for module pages too
+            if (!$this->checkFirewall()) {
+                $this->handleFirewallBlocked();
+                return;
+            }
         }
 
         // Stack the web page together (Header, Navbar, Body, Footer, with CSS & Script refs)
@@ -131,6 +148,196 @@ class Controller extends Library {
         // $this->>view() is Library (parent class) and it uses Fred and all Module->yore_output()'s to take a bite
         $this->page = $this->view($this->output, $this->data);
 
+    }
+
+    /**
+     * Check firewall rules for the current page
+     *
+     * @return bool True if access is allowed, false if blocked
+     */
+    public function checkFirewall(): bool
+    {
+        // Convert page data object to array for firewall processing
+        $pageData = json_decode(json_encode($this->data), true);
+
+        // Get firewall rules from page configuration
+        $firewalls = $this->getFirewallRules($pageData);
+
+        if (empty($firewalls)) {
+            // No firewall rules defined, allow access
+            $this->firewallResult = new FirewallResult(true);
+            return true;
+        }
+
+        // Check all firewall rules
+        $this->firewallResult = Firewall::check($firewalls, $pageData, $this->domain);
+
+        return $this->firewallResult->allowed;
+    }
+
+    /**
+     * Extract firewall rules from page configuration
+     *
+     * @param array $pageData Page configuration data
+     * @return array Array of firewall configurations
+     */
+    private function getFirewallRules(array $pageData): array
+    {
+        $firewalls = [];
+
+        // Handle legacy security/public fields for backward compatibility
+        if (isset($pageData['security']) && $pageData['security'] === true) {
+            $firewalls[] = ['type' => 'auth', 'required' => true];
+        }
+
+        if (isset($pageData['public']) && $pageData['public'] === false) {
+            $firewalls[] = ['type' => 'auth', 'required' => true];
+        }
+
+        // Handle new firewall configuration
+        if (isset($pageData['firewalls']) && is_array($pageData['firewalls'])) {
+            $firewalls = array_merge($firewalls, $pageData['firewalls']);
+        }
+
+        // Handle single firewall configuration
+        if (isset($pageData['firewall']) && is_array($pageData['firewall'])) {
+            $firewalls[] = $pageData['firewall'];
+        }
+
+        return $firewalls;
+    }
+
+    /**
+     * Handle firewall blocked access based on context
+     */
+    private function handleFirewallBlocked(): void
+    {
+        $message = $this->firewallResult->message ?? 'Access denied';
+        $data = $this->firewallResult->data;
+
+        // Handle redirect if specified
+        if (isset($data['redirect'])) {
+            header('Location: ' . $data['redirect']);
+            exit;
+        }
+
+        // Determine context and handle accordingly
+        if ($this->isCliContext()) {
+            $this->handleCliFirewallBlocked($message, $data);
+        } elseif ($this->api) {
+            $this->handleApiFirewallBlocked($message, $data);
+        } else {
+            $this->handleWebFirewallBlocked($message, $data);
+        }
+    }
+
+    /**
+     * Handle firewall blocked access for CLI context
+     */
+    private function handleCliFirewallBlocked(string $message, array $data): void
+    {
+        // For CLI, just output error and exit
+        echo "Error: {$message}\n";
+        if (!empty($data)) {
+            echo "Details: " . json_encode($data, JSON_PRETTY_PRINT) . "\n";
+        }
+        exit(1);
+    }
+
+    /**
+     * Handle firewall blocked access for API context
+     */
+    private function handleApiFirewallBlocked(string $message, array $data): void
+    {
+        // For API, return JSON error response
+        $response = [
+            'error' => true,
+            'message' => $message,
+            'code' => 401
+        ];
+
+        // Add additional data if available
+        if (!empty($data)) {
+            $response['data'] = $data;
+        }
+
+        // Check if it's an authentication requirement
+        if (strpos($message, 'Authentication required') !== false) {
+            $response['code'] = 401;
+            $response['message'] = 'Authentication required';
+            
+            // Include login URL if available (for API clients that can handle redirects)
+            $loginUrl = $this->getLoginUrl();
+            if ($loginUrl) {
+                $response['login_url'] = $loginUrl;
+            }
+        }
+
+        http_response_code($response['code']);
+        header('Content-Type: application/json');
+        echo json_encode($response, JSON_PRETTY_PRINT);
+        exit;
+    }
+
+    /**
+     * Handle firewall blocked access for web context
+     */
+    private function handleWebFirewallBlocked(string $message, array $data): void
+    {
+        // Check if it's an authentication requirement
+        if (strpos($message, 'Authentication required') !== false) {
+            // Redirect to login page if available
+            $loginUrl = $this->getLoginUrl();
+            if ($loginUrl) {
+                header('Location: ' . $loginUrl);
+                exit;
+            }
+        }
+
+        // Default to 403 Forbidden error
+        $this->abort(403, $message);
+    }
+
+    /**
+     * Check if running in CLI context
+     */
+    private function isCliContext(): bool
+    {
+        return php_sapi_name() === 'cli' || (isset($this->cli) && $this->cli);
+    }
+
+    /**
+     * Get the login URL for the current domain/site
+     *
+     * @return string|null
+     */
+    private function getLoginUrl(): ?string
+    {
+        // 1. Check for domain-specific login page
+        $domainLogin = "../pages/_domains/{$this->domain}/{$this->site}/login.json";
+        if (file_exists($domainLogin)) {
+            return "/{$this->site}/login";
+        }
+
+        // 2. Check for default login page
+        $defaultLogin = "../pages/{$this->site}/login.json";
+        if (file_exists($defaultLogin)) {
+            return "/{$this->site}/login";
+        }
+
+        // 3. Look for modules with web_login method (framework routing)
+        foreach ($this->modules as $moduleName => $module) {
+            if (method_exists($module, 'web_login')) {
+                return "/module/{$moduleName}/login";
+            }
+        }
+
+        // 4. Fallback to Users module if it exists (even without web_login method)
+        if (isset($this->modules['Users'])) {
+            return "/module/users/login";
+        }
+
+        return null;
     }
 
 
