@@ -430,7 +430,7 @@ class Firewall
             }
             $cached = include $cacheFile;
             return is_array($cached) ? $cached : null;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // Cache file corrupted, delete it
             if (file_exists($cacheFile)) {
                 unlink($cacheFile);
