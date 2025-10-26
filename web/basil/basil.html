@@ -1,0 +1,256 @@
+<h1 id="basil-15-minute-presentation-handout">Basil - 15 Minute Presentation Handout</h1>
+<p><strong>Speaker:</strong> Erik Olson
+    <strong>Audience:</strong> Intro CS / scripting students
+    <strong>Duration:</strong> 15 minutes (live demo included)</p>
+<hr>
+<h2 id="session-goals">Session goals</h2>
+<ul>
+    <li>Explain <strong>what Basil is</strong> and <strong>why it exists</strong>.</li>
+    <li>Show how Basil is <strong>easy to learn</strong> and <strong>AI friendly</strong> to generate and edit.</li>
+    <li>Share the <strong>collaboration workflow</strong> (RustRover + ChatGPT + Junie Ultimate).</li>
+    <li>Demonstrate <strong>CLI</strong> and <strong>CGI templating</strong> with small, readable examples.</li>
+</ul>
+<hr>
+<h2 id="what-is-basil-">What is Basil-</h2>
+<p>Basil is a tiny, modern <strong>BASIC-inspired</strong> language designed to be:</p>
+<ul>
+    <li><strong>Readable for beginners</strong> (clear <code>BEGIN ... END</code> blocks, minimal punctuation).</li>
+    <li>Comparable to Php, Python but <strong>simpler and more readable</strong> for beginners.</li>
+    <li><strong>Practical for AI co-creation</strong> (predictable patterns that tools can generate reliably).</li>
+    <li><strong>Versatile in runtime</strong>: runs as <strong>CLI</strong> or <strong>CGI</strong> (auto-selects, or override via env var).</li>
+</ul>
+<p><strong>Good fits:</strong> teaching fundamentals, quick utilities, templated web pages, and AI-assisted prototyping.</p>
+<hr>
+<h2 id="why-basil-is-ai-friendly">Why Basil is AI-friendly</h2>
+<ul>
+    <li><strong>Block style:</strong> single <code>BEGIN ... END</code> (no multiple END-keywords), great for generation and review.</li>
+    <li><strong>Straightforward control flow:</strong> <code>IF</code>, <code>WHILE</code>, <code>BREAK</code>, <code>CONTINUE</code>, <code>TRUE</code>/<code>FALSE</code>.</li>
+    <li><strong>Predictable templating:</strong> PHP-style delimiters but cleaner defaults.</li>
+    <li><strong>Low ceremony:</strong> fewer edge cases - fewer AI mistakes.</li>
+</ul>
+<hr>
+<h2 id="how-basil-was-developed-collab-workflow-">How Basil was developed (collab workflow)</h2>
+<ul>
+    <li><strong>RustRover</strong> as the IDE (custom Run configs + External Tool hotkeys/buttons).</li>
+    <li><strong>ChatGPT + Junie Ultimate</strong> for rapid drafting, codegen, and spec iterations.</li>
+    <li><strong>Junie Ultimate</strong>: self-hosted AI, privacy-focused, tuned for coding tasks.</li>
+    <li><strong>Human review:</strong> vetting AI output, testing, and refining.</li>
+    <li><strong>Tight loop:</strong> propose - implement - run - refine.  Lots of small tests and circular feedback.</li>
+</ul>
+<p>Key takeaway: <strong>AI accelerates</strong>, but <strong>human guidance and testing</strong> shape quality.</p>
+<hr>
+<h2 id="basic-vs-basil-quick-contrasts-">BASIC vs. Basil (quick contrasts)</h2>
+<ul>
+    <li><strong>Blocks:</strong> <code>BEGIN ... END</code> (Basil) vs. many dialects using <code>END IF</code>, <code>WEND</code>, etc.</li>
+    <li><strong>Loops:</strong> <code>WHILE ... BEGIN ... END</code> with <code>BREAK</code>/<code>CONTINUE</code>; <code>TRUE</code>/<code>FALSE</code> literals.</li>
+    <li><p><strong>CGI templating:</strong></p>
+        <ul>
+            <li>Code blocks: <code>&lt;-basil ... -></code> (and optional short <code>&lt;-bas ... -></code> if enabled).</li>
+            <li>Echo shorthand: <code>&lt;-= expr -></code> - prints expression result.</li>
+            <li>Built-in <code>HTML(x)</code> escapes for safe embedding.</li>
+        </ul>
+    </li>
+    <li><p><strong>Directives (at file start):</strong></p>
+        <ul>
+            <li><code>#CGI_NO_HEADER</code> (manual headers),</li>
+            <li><code>#CGI_DEFAULT_HEADER &quot;Content-Type: ...&quot;</code> (override default),</li>
+            <li><code>#CGI_SHORT_TAGS_ON</code> (allow <code>&lt;-bas ... -></code>), plus reserved <code>#BASIL_DEV</code>, <code>#BASIL_DEBUG</code>.</li>
+        </ul>
+    </li>
+    <li><strong>Caching:</strong> precompiled bytecode <code>.basilx</code> lives beside the source.</li>
+</ul>
+<hr>
+<h2 id="talk-outline-15-minutes-">Talk outline (15 minutes)</h2>
+<p><strong>1) Framing: what &amp; why (2 min)</strong></p>
+<ul>
+    <li>Basil's purpose and audience; AI + beginner synergy.</li>
+</ul>
+<p><strong>2) AI-friendly design (3 min)</strong></p>
+<ul>
+    <li><code>BEGIN/END</code>, simple loops &amp; booleans, predictable syntax.</li>
+</ul>
+<p><strong>3) Collaboration story (3 min)</strong></p>
+<ul>
+    <li>RustRover + ChatGPT + Junie workflow; examples of spec-impl cycles.</li>
+</ul>
+<p><strong>4) BASIC vs Basil contrasts (3 min)</strong></p>
+<ul>
+    <li>Show readability and modern touches (templating, directives).</li>
+</ul>
+<p><strong>5) Live demos (4 min)</strong></p>
+<ul>
+    <li>CLI hello + quick loop.</li>
+    <li>CGI page with echo, a loop over request params, and a custom header.</li>
+</ul>
+<hr>
+<h2 id="demo-cheat-sheet">Demo cheat-sheet</h2>
+<h3 id="cli">CLI</h3>
+<ol>
+    <li><p>Run a file:</p>
+        <pre><code>cargo run -<span class="hljs-selector-tag">q</span> -<span class="hljs-selector-tag">p</span> basilc --features obj-bmx -- run examples/hello.basil
+</code></pre></li>
+    <li>Show some program examples.
+        <p>
+<textarea style="width:100%; max-width:600px;height: 500px;" readonly>
+FUNC fib(n)
+BEGIN
+IF n < 2 THEN RETURN n;
+RETURN fib(n - 1) + fib(n - 2);
+END
+
+PRINT fib(10); // 55
+</textarea>
+        </p>
+
+        <p>
+<textarea style="width:100%; max-width:600px;height: 500px;" readonly>
+REM Simple Hello World
+PRINT "Hello World!"
+    FOR I% = 1 TO 5
+        PRINT "This is loop number "; I%;
+    NEXT
+PRINT "Goodbye!"
+
+</textarea>
+        </p>
+        // Demo of INPUT$ and IF statements.
+        LET A$ = INPUT$("\nEnter your name:");
+        PRINT "\nHello, "+A$+"!";
+
+        LET ans$ = INPUT$("\nDo you want to do something else? (Y/N): ");
+
+        // Block IF:
+
+        IF ans$ == "Y" THEN
+        BEGIN
+        PRINT "\nWinken";
+        PRINT "\nBLinken";
+        PRINT "\nNod";
+        ELSE
+        PRINT "\nOkay, I'll skip that.";
+        END
+
+        // Immediate IF:
+        IF ans$ == "Y" THEN PRINT "You said yes"; ELSE PRINT "You did not say Yes";
+        PRINT "\nGoodbye!";
+        <p>
+<textarea style="width:100%; max-width:600px;height: 500px;" readonly>
+REM Arrays example for BASIL
+REM Demonstrates DIM for string ($), integer (%), and float arrays, with up to 2 dimensions
+
+REM --- 1D integer array (0..5 inclusive => length 6) ---
+DIM N%(5);
+LET N%(0) = 10;
+LET N%(5) = 99;
+PRINT "N%(0)=", N%(0), ", N%(5)=", N%(5);
+PRINT "LEN(N%)=", LEN(N%);
+
+REM --- 1D float array (0..3 inclusive => length 4) ---
+DIM X(3);
+LET X(0) = 1.5;
+LET X(3) = 2.5;
+PRINT "X(0)=", X(0), ", X(3)=", X(3);
+PRINT "LEN(X)=", LEN(X);
+
+REM --- 2D string array (0..2 by 0..1 => 3 x 2 = 6 elements) ---
+DIM S$(2,1);
+LET S$(0,0) = "Hello";
+LET S$(2,1) = "World";
+PRINT "S$(0,0)=", S$(0,0), ", S$(2,1)=", S$(2,1);
+PRINT "LEN(S$)=", LEN(S$);
+
+REM Show that re-DIM resets the array
+DIM S$(1,0); REM now capacity is 2 x 1 = 2 elements, previous contents cleared
+LET S$(1,0) = "Reset";
+PRINT "After re-DIM, LEN(S$)=", LEN(S$), "; S$(1,0)=", S$(1,0);
+
+</textarea>
+        </p>
+
+        <p>
+<textarea style="width:100%; max-width:600px;height: 500px;" readonly>
+FUNC fib(n)
+BEGIN
+IF n < 2 THEN RETURN n;
+RETURN fib(n - 1) + fib(n - 2);
+END
+
+PRINT fib(10); // 55
+</textarea>
+        </p>
+    </li>
+    </li>
+</ol>
+<h3 id="cgi-templating-">CGI (templating)</h3>
+<ul>
+    <li>Open the live demo showing custom header + <code>FOREACH</code> over query params:
+        <strong><a href="https://yobasic.com/basil/cgi.basil-This=That&amp;Moo=Cow">https://yobasic.com/basil/cgi.basil-This=That&amp;Moo=Cow</a></strong></li>
+    <li><p>Show a minimal template shape:</p>
+        <p>
+<textarea style="width:100%; max-width:600px;height: 500px;" readonly>
+#CGI_NO_HEADER
+<?basil
+  // Manual header mode: send headers explicitly, then a blank line
+  PRINT "Status: 200 OK\r\n";
+  PRINT "Content-Type: text/html; charset=utf-8\r\n\r\n";
+?>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Basil CGI Demo</title>
+</head>
+<body>
+  <h1>Hello, World</h1>
+  <p>This page is rendered by a Basil CGI template.</p>
+
+  <h2>Request parameters</h2>
+  <p>Any GET or POST parameters will be listed below.</p>
+  <ul>
+  <?basil
+    FOR EACH p$ IN REQUEST$()
+      PRINT "<li>" + HTML$(p$) + "</li>\n";
+    NEXT
+    ?>
+</ul>
+</body>
+</html>
+</textarea>
+        </p>
+    </li>
+</ul>
+<p><h2>Request parameters</h2>
+<p>Any GET or POST parameters will be listed below.</p>
+<ul>
+    &lt;-basil
+    FOR EACH p$ IN REQUEST$()
+    PRINT &quot;<li>&quot; + HTML$(p$) + &quot;</li>\n&quot;;
+    NEXT
+    ->
+</ul>
+</body>
+</html></p>
+<p>  ```</p>
+<ul>
+    <li>Mention <code>#CGI_NO_HEADER</code> if you want to emit headers yourself.</li>
+</ul>
+<hr>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul>
+    <li><strong>Readable + learnable</strong>: great for first programs and quick wins.</li>
+    <li><strong>AI-centric</strong>: easy for tools to suggest, and for humans to edit.</li>
+    <li><strong>Two modes</strong> (CLI/CGI) with one codebase; templating is familiar yet tidy.</li>
+    <li><strong>Small surface area</strong> - faster mastery, fewer foot-guns.</li>
+</ul>
+<hr>
+<h2 id="optional-discussion-prompts">Optional discussion prompts</h2>
+<ul>
+    <li>Where could Basil fit in your projects- (scripts, teaching, small web tools)</li>
+    <li>What features would you want next (packages, standard lib helpers, testing)-</li>
+</ul>
+<hr>
+<h2 id="resources">Resources</h2>
+<p><a href="https://yobasic.com/basil/cgi.basil-moo=cow&amp;cat=meow">https://yobasic.com/basil/cgi.basil-moo=cow&amp;cat=meow</a>  (live CGI demo)</p>
+<p><a href="https://github.com/blackrushllc/basil">https://github.com/blackrushllc/basil</a> (source code)</p>
+<p><a href="https://www.jetbrains.com/rust/download/-section=windows">https://www.jetbrains.com/rust/download/-section=windows</a> (RustRover IDE)</p>
+<p><a href="https://rust-lang.org/tools/install/">https://rust-lang.org/tools/install/</a> (Rust toolchain)</p>

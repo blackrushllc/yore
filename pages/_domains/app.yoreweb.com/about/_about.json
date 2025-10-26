@@ -1,0 +1,15 @@
+﻿{
+  "domain": "app.yoreweb.com",
+  "section": "about",
+  "pagekey": "about",
+  "title": "App",
+  "theme": "app",
+  "desc": "This page should be coming from the Controller and not a view",
+  "body": "This page should be coming from the Controller and not a view",
+  "view": "about",
+  "views": [],
+  "example_fred_var": "Yo ho ho",
+  "security": false,
+  "public": true,
+  "markdown": true
+}

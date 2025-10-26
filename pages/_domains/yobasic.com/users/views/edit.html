@@ -1,0 +1,46 @@
+<script>
+    if ( ("@MEMORY('role')" != 'user') && ("@MEMORY('role')" != 'admin') )  location.href='/module/users/login';
+</script>
+<!--<h1>CRUD GENERATED EDIT PAGE - @MEMORY('username') (@MEMORY('role'))</h1>-->
+@flash()
+<a href="/users/index">Go Back to List</a>
+<hr>
+<p>
+    <h4>Edit Record @field("id")</h4>
+    @form('post')
+    @app_post("editusers")
+    <!-- content -->
+    
+<!-- FIELDS -->
+
+    @input("username","Username","Username:","@field("username")")
+    @input("password","Password","Password:","@field("password")")
+    @input("name","Name","Name:","@field("name")")
+    @input("phone","Phone","Phone:","@field("phone")")
+    @email("email","Email","Email:","@field("email")")
+
+<tr>
+    <th>Role:</th>
+    <td>
+        <select name="role" id="role" style="width:100%;">
+            <option disabled value="">-- Pick Role -- </option>
+
+        </select>
+    </td>
+</tr>
+
+    @checkbox("status","Status","@field("status")")
+    @textarea("profile","Profile","Profile:","@field("profile")")
+    
+    
+    
+<!-- END FIELDS -->
+    <!-- end content -->
+    @submit('Save')
+    @endform()
+</p>
+<pre>
+    Created: @field("created_at")
+    Updated: @field("updated_at")
+    Deleted: @field("deleted_at")
+    @fetch("SELECT * FROM app_yw_users WHERE ID=@arg(1)") Columns in 1 row</pre>

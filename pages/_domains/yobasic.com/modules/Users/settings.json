@@ -1,0 +1,12 @@
+{
+  "auth_table":  "app_yw_users",
+  "auth_username_field":  "name,phone,email",
+  "uniq_username_field":  "email",
+  "auth_password_field":  "password",
+  "admin_username":  "admin",
+  "admin_password":  "P@55w0rd!",
+  "readonly_username": "readonly",
+  "readonly_password": "P@55w0rd!!",
+  "guest_username": "guest",
+  "guest_password": "P@55w0rd!!!"
+}

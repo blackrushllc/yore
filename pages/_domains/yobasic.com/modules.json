@@ -1,0 +1,5 @@
+{
+  "all":  true,
+  "debug":  true,
+  "exclude": ["LCC", "Arc", "Chsapp", "City", "Qatsi", "Debug", "FHHC"]
+}

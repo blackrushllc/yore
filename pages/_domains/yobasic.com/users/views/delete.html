@@ -1,0 +1,10 @@
+<script>
+    if ( ("@MEMORY('role')" != 'user') && ("@MEMORY('role')" != 'admin') )  location.href='/module/users/login';
+</script>
+<!--<h1>CRUD GENERATED DELETE PAGE - @MEMORY('username') (@MEMORY('role'))</h1>-->
+@flash()
+<a href="/users/index">Go Back to List</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/users/deleted">Go To Trash</a>
+<hr>
+<h4>Delete Record</h4>
+<p>Record has been deleted</p>
+<pre>@appdelete(@arg(1))</pre>

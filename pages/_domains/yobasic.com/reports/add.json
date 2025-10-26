@@ -1,0 +1,15 @@
+﻿{
+  "domain": "app.yoreweb.com",
+  "section": "reports",
+  "pagekey": "add",
+  "title": "Add Record",
+  "theme": "app",
+  "desc": "This is a the reports add page for app.yoreweb.com",
+  "body": "This is the body of the 'aapp.yoreweb.com' domain, 'reports' site, 'add' page",
+  "view": "add",
+  "views": [],
+  "example_fred_var": "Yo ho ho",
+  "security": false,
+  "public": true,
+  "markdown": true
+}

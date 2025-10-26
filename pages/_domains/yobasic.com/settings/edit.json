@@ -1,0 +1,15 @@
+﻿{
+  "domain": "app.yoreweb.com",
+  "section": "settings",
+  "pagekey": "edit",
+  "title": "Edit Record",
+  "theme": "app",
+  "desc": "This is a the settings edit page for app.yoreweb.com",
+  "body": "This is the body of the 'app.yoreweb.com' domain, 'settings' site, 'edit' page",
+  "view": "edit",
+  "views": [],
+  "example_fred_var": "Yo ho ho",
+  "security": false,
+  "public": true,
+  "markdown": true
+}

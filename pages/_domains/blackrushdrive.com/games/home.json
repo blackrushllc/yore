@@ -1,0 +1,15 @@
+﻿{
+  "domain": "blackrush.us",
+  "section": "games",
+  "pagekey": "home",
+  "title": "Blackrush Entertainment",
+  "theme": "blackrush",
+  "desc": "This is the BLACKRUSH games site home page games view",
+  "body": "This is the body of the 'blackrush' domain, 'games' site, 'home' page, games view",
+  "view": "home",
+  "views": [],
+  "example_fred_var": "Yo ho ho",
+  "security": false,
+  "public": true,
+  "markdown": true
+}

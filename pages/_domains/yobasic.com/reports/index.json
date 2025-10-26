@@ -1,0 +1,15 @@
+﻿{
+  "domain": "app.yoreweb.com",
+  "section": "reports",
+  "pagekey": "index",
+  "title": "Index Page",
+  "theme": "app",
+  "desc": "This is a the reports edit page for app.yoreweb.com",
+  "body": "This is the body of the 'app.yoreweb.com' domain, 'reports' site, 'index' page",
+  "view": "index",
+  "views": [],
+  "example_fred_var": "Yo ho ho",
+  "security": false,
+  "public": true,
+  "markdown": true
+}

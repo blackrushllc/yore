@@ -1,0 +1,15 @@
+{
+  "domain": "<?= $domain ?>",
+  "section": "<?= $section ?>",
+  "pagekey": "index",
+  "title": "<?= $title ?>",
+  "theme": "app",
+  "desc": "This is the <?= $section ?> section edit page for <?= $domain ?>",
+  "body": "This is the body of the '<?= $domain ?>' domain, '<?= $section ?>' section, 'index' page",
+  "view": "index",
+  "views": [],
+  "example_fred_var": "Yo ho ho",
+  "security": false,
+  "public": true,
+  "markdown": true
+}

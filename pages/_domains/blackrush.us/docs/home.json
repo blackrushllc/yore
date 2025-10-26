@@ -1,0 +1,14 @@
+﻿{
+  "domain": "blackrush.us",
+  "section": "docs",
+  "pagekey": "home",
+  "title": "Blackrush Entertainment",
+  "theme": "blackrush",
+  "desc": "This is the BLACKRUSH docs site home page",
+  "body": "This is the body of the 'blackrush' domain, 'docs' site, 'home' page",
+  "view": "home",
+  "views": [],
+  "example_fred_var": "Yo ho ho",
+  "security": false,
+  "public": true
+}

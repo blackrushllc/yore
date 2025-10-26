@@ -1,0 +1,17 @@
+<script>
+    if ("@MEMORY('role')" != 'admin') location.href='/module/users/login';
+</script>
+<!--<h1>CRUD GENERATED ADD PAGE - @MEMORY('username') (@MEMORY('role'))</h1>-->
+@flash()
+<a href="/<?= $site ?>/index">Go back to Index</a>
+<hr>
+<p>
+    <h4><?= $title ?></h4>
+    @form('post')
+    @<?= $prefix ?>_post("add<?= $site ?>")
+    <!-- content -->
+    <?= $content ?>
+    <!-- end content -->
+    @submit('Save')
+    @endform()
+</p>

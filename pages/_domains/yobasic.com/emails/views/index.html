@@ -1,0 +1,101 @@
+<script>
+    if ( ("@MEMORY('role')" != 'admin') && ("@MEMORY('role')" != 'user') )  location.href='/module/users/login';
+</script>
+<!--<h1>CRUD GENERATED INDEX PAGE - @MEMORY('username') (@MEMORY('role'))</h1>-->
+<a href="/">Go back to Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/emails/deleted">Go To Trash</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/emails/add">Add New</a>
+<hr>
+<p>
+    @app_admin_view('emails')
+</p>
+
+
+
+<script>
+        
+$(document).ready(function() {
+    $(document).on('click', '.deletelink', function(event) {
+        var buttonText = $(this).html();
+        if (confirm('Move to Trash, are you sure?')) {
+            
+            rel = $(this).attr('rel');
+            //window.open('/emails/delete/' + rel, '_blank');   
+            window.location.href = '/emails/delete/' + rel + '/' + buttonText;
+        }
+    });
+    $(document).on('click', '.editlink', function(event) {
+        rel = $(this).attr('rel');
+        //window.open('/emails/edit/' + rel, '_blank');   
+        window.location.href = '/emails/edit/' + rel;
+    });
+    $('#myTable').DataTable({
+        "rowCallback": function(row, data, index) {
+            if (index % 2 === 0) {
+                $(row).css('background-color', '#aaffaa'); // Light grey
+            } else {
+                $(row).css('background-color', '#ccffcc'); // White
+            }
+        },
+        createdRow: function(row, data, dataIndex) {
+            // Add attributes to cells
+            //$('td', row).eq(1).attr('title', 'law firm currently assigned lead');
+            //$('td', row).eq(6).attr('title', 'lead sought medical treatment');
+            //$('td', row).eq(7).attr('title', 'lead has determined fault');
+        },
+        columns: [
+            {
+                data: 'id',
+                name: 'id',
+                className: 'nowrap',
+                render: function(data, type, row) {
+                    var ret = '';
+                    console.log(row);
+                        
+                    ret += '<button class="editlink btn btn-sm btn-warning" rel="' + data + '">Edit</button>';
+                    ret += '&nbsp;<button class="deletelink btn btn-sm btn-danger" rel="' + data + '">Del</button>';
+                    
+                    //ret += '<span id="clock' + data + '">' + jclock(row.created_at) + '</span>';
+                    //ret += '<span id="audio' + data + '">' + jaudio(row.mp3file) + '</span>';
+
+                    return ret;
+                },
+                orderable: false // Disable ordering on this column
+            },
+
+            
+             { data: 'created_at', name: 'created_at', visible: false },
+             { data: 'updated_at', name: 'updated_at', visible: false },
+             { data: 'deleted_at', name: 'deleted_at', visible: false },
+             { data: 'slug', name: 'slug', visible: true },
+             { data: 'body', name: 'body', visible: true }
+
+        ],
+        order: [[2, 'desc']],
+       // dom: 'lBfrtip', // Include the Buttons extension
+        dom: '<"top"lf>     <"top"B> rt<"bottom"ip><"clear">', // Include the Buttons extension
+        buttons: [
+            'csv', 'excel', 'pdf', 'print'
+        ],
+        lengthMenu: [ // Add this line to specify the number of rows per page options
+            [10, 25, 50, 100], // Page lengths
+            [10, 25, 50, 100]  // Display values
+        ],
+        pageLength: 25, // Default page length
+        initComplete: function(settings, json) {
+            // Add padding to the left of the buttons container
+
+            console.log('DT app_emails Init Complete');
+
+            $('.dt-buttons').wrap('<div class="buttons-container"></div>');
+            $('.dt-buttons').wrap('<div class="buttons-container"></div>');
+            $('.dt-buttons').wrap('<div class="buttons-container"></div>');
+
+        }
+    });
+});
+
+</script>
+<style>
+    .nowrap {
+        white-space: nowrap;
+    }
+</style>

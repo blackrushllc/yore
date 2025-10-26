@@ -1,0 +1,12 @@
+{
+  "from_address": "info@yobasic.com",
+  "from_name":  "YoreWeb",
+  "username":  "postmaster@mg.yobasic.com",
+  "password": "xxx",
+  "garfenibbin": "xxx",
+  "cipher":  "AES-128-CTR",
+  "driver":  "smtp",
+  "host":  "smtp.mailgun.org",
+  "port":  "587",
+  "encryption":  "tls"
+}

@@ -1,0 +1,61 @@
+<!-- THIS VIEW OVERRIDES THE ONE FROM THE Users MODULE -->
+<style>
+    pre {
+        line-height: 1;
+        margin: 0;
+        padding: 0;
+        color: red;
+        overflow: hidden;
+        font-size: 50%;
+    }
+
+    body {
+        color: #335599;
+        font-size: 100%;
+        background-image: url(/themes/app/images/blue-curve-background.jpg);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-color: #ddd;
+    }
+
+    input, textarea {
+        width: 320px;
+    }
+
+    label {
+        font-size: 90%;
+    }
+
+    .error {
+        color: red;
+        display: none;
+    }
+</style>
+
+<div style="text-align:center;">
+    <img src="/themes/app/images/yore2.png" style="width:340px;">
+    <h1>Login</h1>
+    <form method="post">
+        <div>
+            <label for="username">Username, Phone or Email:<br>
+                <input type="text" name="username">
+            </label>
+        </div>
+        <div>
+            <label for="password">Password:<br>
+                <input type="password" name="password">
+            </label>
+        </div>
+        <div>
+            <br>
+            <input type="submit" value="Submit" class="btn btn-primary">
+        </div>
+    </form>
+    <a style="font-size:65%;" href="/register/lostpassword" class="btn btn-link">Forgot your Username or Password?</a>
+
+</div>
+<br>
+<br>
+

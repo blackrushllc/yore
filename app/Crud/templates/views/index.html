@@ -1,0 +1,12 @@
+<script>
+    if ( ("@MEMORY('role')" != 'admin') && ("@MEMORY('role')" != 'readonly') )  location.href='/module/users/login';
+</script>
+<!--<h1>CRUD GENERATED INDEX PAGE - @MEMORY('username') (@MEMORY('role'))</h1>-->
+<a href="/">Go back to Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/<?= $site ?>/deleted">Go To Trash</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/<?= $site ?>/add">Add New</a>
+<hr>
+<p>
+    @<?= $prefix ?>_admin_view('<?= $site ?>')
+</p>
+
+
+<?= $content ?>

@@ -1,0 +1,4 @@
+LET a = 2 + 3 * 4;
+PRINT a; // 14
+LET b = (2 + 3) * 4;
+PRINT b; // 20

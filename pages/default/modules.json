@@ -1,0 +1,6 @@
+{
+  "all":  true,
+  "debug":  true,
+  "exclude": ["App","Games","Hello","Skeleton","Mail","Users","Database","Admin","Twilite","Test"],
+  "note": "By default we want to exclude any modules that could be exploited or that is not relevant to the default domain. You can add or remove modules in the exclude list as needed."
+}

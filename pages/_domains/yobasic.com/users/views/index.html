@@ -1,0 +1,107 @@
+<script>
+    if ( ("@MEMORY('role')" != 'user') && ("@MEMORY('role')" != 'admin') )  location.href='/module/users/login';
+</script>
+<!--<h1>CRUD GENERATED INDEX PAGE - @MEMORY('username') (@MEMORY('role'))</h1>-->
+<a href="/">Go back to Home</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/users/deleted">Go To Trash</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/users/add">Add New</a>
+<hr>
+<p><i style="color:purple;" class="bi bi-info-circle" title="No Insurance"></i> These are the website login accounts and contact info for all users regardless of role.</p>
+<p>
+    @app_admin_view('users')
+</p>
+
+<script>
+        
+$(document).ready(function() {
+    $(document).on('click', '.deletelink', function(event) {
+        var buttonText = $(this).html();
+        if (confirm('Move to Trash, are you sure?')) {
+            
+            rel = $(this).attr('rel');
+            //window.open('/users/delete/' + rel, '_blank');   
+            window.location.href = '/users/delete/' + rel + '/' + buttonText;
+        }
+    });
+    $(document).on('click', '.editlink', function(event) {
+        rel = $(this).attr('rel');
+        //window.open('/users/edit/' + rel, '_blank');   
+        window.location.href = '/users/edit/' + rel;
+    });
+    $('#myTable').DataTable({
+        "rowCallback": function(row, data, index) {
+            if (index % 2 === 0) {
+                $(row).css('background-color', '#aaffaa'); // Light grey
+            } else {
+                $(row).css('background-color', '#ccffcc'); // White
+            }
+        },
+        createdRow: function(row, data, dataIndex) {
+            // Add attributes to cells
+            //$('td', row).eq(1).attr('title', 'law firm currently assigned lead');
+            //$('td', row).eq(6).attr('title', 'lead sought medical treatment');
+            //$('td', row).eq(7).attr('title', 'lead has determined fault');
+        },
+        columns: [
+            {
+                data: 'id',
+                name: 'id',
+                className: 'nowrap',
+                render: function(data, type, row) {
+                    var ret = '';
+                    console.log(row);
+                        
+                    ret += '<button class="editlink btn btn-sm btn-warning" rel="' + data + '">Edit</button>';
+                    ret += '&nbsp;<button class="deletelink btn btn-sm btn-danger" rel="' + data + '">Del</button>';
+                    
+                    //ret += '<span id="clock' + data + '">' + jclock(row.created_at) + '</span>';
+                    //ret += '<span id="audio' + data + '">' + jaudio(row.mp3file) + '</span>';
+
+                    return ret;
+                },
+                orderable: false // Disable ordering on this column
+            },
+
+            
+             { data: 'username', name: 'username', visible: true },
+             { data: 'password', name: 'password', visible: true },
+             { data: 'name', name: 'name', visible: true , orderable: true},
+             { data: 'phone', name: 'phone', visible: true },
+             { data: 'email', name: 'email', visible: true },
+             { data: 'role', name: 'role', visible: true },
+             { data: 'token', name: 'token', visible: false },
+             { data: 'status', name: 'status', visible: false },
+             { data: 'profile', name: 'profile', visible: false },
+             { data: 'created_at', name: 'created_at', visible: false },
+             { data: 'updated_at', name: 'updated_at', visible: false },
+             { data: 'deleted_at', name: 'deleted_at', visible: false }
+
+        ],
+        order: [[2, 'desc']],
+       // dom: 'lBfrtip', // Include the Buttons extension
+        dom: '<"top"lf>     <"top"B> rt<"bottom"ip><"clear">', // Include the Buttons extension
+        buttons: [
+            'csv', 'excel', 'pdf', 'print'
+        ],
+        lengthMenu: [ // Add this line to specify the number of rows per page options
+            [10, 25, 50, 100], // Page lengths
+            [10, 25, 50, 100]  // Display values
+        ],
+        pageLength: 25, // Default page length
+        initComplete: function(settings, json) {
+            // Add padding to the left of the buttons container
+
+            console.log('DT app_users Init Complete');
+
+            $('.dt-buttons').wrap('<div class="buttons-container"></div>');
+            $('.dt-buttons').wrap('<div class="buttons-container"></div>');
+            $('.dt-buttons').wrap('<div class="buttons-container"></div>');
+
+        }
+    });
+});
+
+</script>
+<style>
+    .nowrap {
+        white-space: nowrap;
+    }
+</style>

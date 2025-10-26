@@ -1,0 +1,9 @@
+{
+  "auth_table":  "users",
+  "auth_username_field":  "email",
+  "auth_password_field":  "password",
+  "admin_username":  "admin",
+  "admin_password":  "password!",
+  "readonly_username": "readonly",
+  "readonly_password": "password?"
+}
