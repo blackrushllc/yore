@@ -265,3 +265,134 @@
 </li>
 </ol>
 <p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p class="MsoNormal">Dear [Attorney Name] / [Firm Name],</p>
+<p class="MsoNormal">TeleEMC provides Emergency Medical Condition (EMC) tele-evaluations under Florida's Personal Injury Protection (PIP) statute.</p>
+<p class="MsoNormal">We are writing to confirm your firm's representation of&nbsp;<strong>Carlos Bermudez</strong>&nbsp;and to verify the claim and billing details associated with his recent EMC evaluation.</p>
+<div class="MsoNormal" style="text-align: center;" align="center"><hr align="center" size="0" width="100%"></div>
+<p class="MsoNormal"><strong>A. Representation Confirmation</strong></p>
+<p class="MsoNormal">Please confirm that:</p>
+<ol style="margin-top: 0in;" start="1" type="1">
+<li class="MsoNormal" style="mso-list: l3 level1 lfo1; tab-stops: list .5in;">You/your firm represent&nbsp;<strong>Carlos Bermudez (DOB: 12/05/2002)</strong>&nbsp;in connection with an automobile accident that occurred on&nbsp;<strong>07/26/2025</strong>.</li>
+<li class="MsoNormal" style="mso-list: l3 level1 lfo1; tab-stops: list .5in;">You authorize TeleEMC to:</li>
+<ul style="margin-top: 0in;" type="disc">
+<li class="MsoNormal" style="mso-list: l3 level2 lfo1; tab-stops: list 1.0in;">Submit bills and related EMC documentation directly to the PIP carrier; and</li>
+<li class="MsoNormal" style="mso-list: l3 level2 lfo1; tab-stops: list 1.0in;">Communicate with your office regarding this patient's claim and billing status.</li>
+</ul>
+</ol>
+<p class="MsoNormal"><strong>Service Snapshot:</strong></p>
+<ul style="margin-top: 0in;" type="disc">
+<li class="MsoNormal" style="mso-list: l1 level1 lfo2; tab-stops: list .5in;">Evaluation Type: Emergency Medical Condition (EMC) Tele-Evaluation</li>
+<li class="MsoNormal" style="mso-list: l1 level1 lfo2; tab-stops: list .5in;">Evaluation Date: 08/20/2025</li>
+<li class="MsoNormal" style="mso-list: l1 level1 lfo2; tab-stops: list .5in;">Date of Loss: 07/26/2025</li>
+<li class="MsoNormal" style="mso-list: l1 level1 lfo2; tab-stops: list .5in;">Referring Provider: Dr. Luigi Pagano&nbsp;<em>(Dr. Pagano notified us that your office is the attorney of record for Mr. Bermudez's bodily injury case.)</em></li>
+</ul>
+<div class="MsoNormal" style="text-align: center;" align="center"><hr align="center" size="0" width="100%"></div>
+<p class="MsoNormal"><strong>B. PIP Claim &amp; Billing Verification</strong></p>
+<p class="MsoNormal">Please confirm or correct the following claim details to ensure timely, compliant billing:</p>
+<div class="MsoNormal" style="text-align: center;" align="center"><hr align="center" size="0" width="100%"></div>
+<p class="MsoNormal"><strong>Page 2</strong></p>
+<table class="MsoNormalTable" style="width: 312.75pt; background: white; border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in;" border="0" width="417" cellspacing="0" cellpadding="0">
+<tbody>
+<tr style="mso-yfti-irow: 0; mso-yfti-firstrow: yes;">
+<td style="padding: 0in 0in 0in 0in;" valign="top">
+<p class="MsoNormal"><strong><span style="color: black; mso-color-alt: windowtext;">Field</span></strong></p>
+</td>
+<td style="padding: 0in 0in 0in 0in;" valign="top">
+<p class="MsoNormal"><strong><span style="color: black; mso-color-alt: windowtext;">Details</span></strong></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 1;">
+<td style="padding: 0in 0in 0in 0in;" valign="top">
+<p class="MsoNormal"><strong><span style="color: black; mso-color-alt: windowtext;">Carrier</span></strong></p>
+</td>
+<td style="padding: 0in 0in 0in 0in;" valign="top">
+<p class="MsoNormal"><span style="color: black; mso-color-alt: windowtext;">ABC Insurance Co</span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 2;">
+<td style="padding: 0in 0in 0in 0in;" valign="top">
+<p class="MsoNormal"><strong><span style="color: black; mso-color-alt: windowtext;">Policy #:</span></strong></p>
+</td>
+<td style="padding: 0in 0in 0in 0in;" valign="top">
+<p class="MsoNormal"><span style="color: black; mso-color-alt: windowtext;">[Policy Number]</span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 3;">
+<td style="padding: 0in 0in 0in 0in;" valign="top">
+<p class="MsoNormal"><strong><span style="color: black; mso-color-alt: windowtext;">Claim #:</span></strong></p>
+</td>
+<td style="padding: 0in 0in 0in 0in;" valign="top">
+<p class="MsoNormal"><span style="color: black; mso-color-alt: windowtext;">XYZ</span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 4;">
+<td style="padding: 0in 0in 0in 0in;" valign="top">
+<p class="MsoNormal"><strong><span style="color: black; mso-color-alt: windowtext;">Insured:</span></strong></p>
+</td>
+<td style="padding: 0in 0in 0in 0in;" valign="top">
+<p class="MsoNormal"><span style="color: black; mso-color-alt: windowtext;">[Insured Name, if different from patient]</span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 5;">
+<td style="padding: 0in 0in 0in 0in;" valign="top">
+<p class="MsoNormal"><strong><span style="color: black; mso-color-alt: windowtext;">Patient:</span></strong></p>
+</td>
+<td style="padding: 0in 0in 0in 0in;" valign="top">
+<p class="MsoNormal"><span style="color: black; mso-color-alt: windowtext;">Carlos Bermudez</span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 6;">
+<td style="padding: 0in 0in 0in 0in;" valign="top">
+<p class="MsoNormal"><strong><span style="color: black; mso-color-alt: windowtext;">Date of Loss:</span></strong></p>
+</td>
+<td style="padding: 0in 0in 0in 0in;" valign="top">
+<p class="MsoNormal"><span style="color: black; mso-color-alt: windowtext;">07/26/2025</span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 7; mso-yfti-lastrow: yes;">
+<td style="padding: 0in 0in 0in 0in;" valign="top">
+<p class="MsoNormal"><strong><span style="color: black; mso-color-alt: windowtext;">Date of EMC Evaluation:</span></strong></p>
+</td>
+<td style="padding: 0in 0in 0in 0in;" valign="top">
+<p class="MsoNormal"><span style="color: black; mso-color-alt: windowtext;">08/20/2025</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="MsoNormal">If any information above is incorrect or incomplete, please provide the corrected details in your reply.</p>
+<div class="MsoNormal" style="text-align: center;" align="center"><hr align="center" size="0" width="100%"></div>
+<p class="MsoNormal"><strong>C. Attachments</strong></p>
+<p class="MsoNormal">For your records and reference:</p>
+<ul style="margin-top: 0in;" type="disc">
+<li class="MsoNormal" style="mso-list: l0 level1 lfo3; tab-stops: list .5in;">Assignment of Benefits (AOB): View PDF</li>
+</ul>
+<div class="MsoNormal" style="text-align: center;" align="center"><hr align="center" size="0" width="100%"></div>
+<p class="MsoNormal"><strong>D. Client Status Updates</strong></p>
+<p class="MsoNormal">We respectfully request&nbsp;<strong>periodic updates</strong>&nbsp;regarding the status of this client's case so that our records remain current.</p>
+<p class="MsoNormal">If you are&nbsp;<strong>not the attorney of record</strong>, or if representation has changed, please notify us immediately by email at&nbsp;<strong>admin@TeleEMC.com</strong>.</p>
+<p class="MsoNormal">For any of the following:</p>
+<ul style="margin-top: 0in;" type="disc">
+<li class="MsoNormal" style="mso-list: l2 level1 lfo4; tab-stops: list .5in;">Settlement reductions or waiver requests</li>
+<li class="MsoNormal" style="mso-list: l2 level1 lfo4; tab-stops: list .5in;">Copies of medical records, ledgers, or documentation</li>
+</ul>
+<p class="MsoNormal">please email&nbsp;<strong>admin@TeleEMC.com</strong>&nbsp;and reference the patient name and claim number.</p>
+<div class="MsoNormal" style="text-align: center;" align="center"><hr align="center" size="0" width="100%"></div>
+<p class="MsoNormal"><strong>E. Remittance Information</strong></p>
+<p class="MsoNormal">Please remit all settlement payments or outstanding balances to:</p>
+<p class="MsoNormal"><strong>TeleEMC</strong>&nbsp;<br>P.O. Box 286154 Tampa, FL 33630</p>
+<div class="MsoNormal" style="text-align: center;" align="center"><hr align="center" size="0" width="100%"></div>
+<p class="MsoNormal"><strong>Thank you for your prompt assistance.</strong> <br>You may reply directly to this email with confirmation or updates, or securely send documents by fax or encrypted email.</p>
+<p class="MsoNormal">Kind regards,&nbsp;<br><strong>TeleEMC &mdash; Billing &amp; Claims Department</strong></p>
+<p class="MsoNormal">&nbsp;</p>
