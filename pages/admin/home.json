@@ -1,9 +1,0 @@
-{
-  "domain": "admin",
-  "site": "admin",
-  "page": "home",
-  "title": "No Title",
-  "theme": "admin",
-  "desc": "This is the server administration home page",
-  "body": "Default: Hello! This is the body of the server administration home page!"
-}
